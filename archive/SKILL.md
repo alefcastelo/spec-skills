@@ -9,9 +9,9 @@ Archive the spec directory (`SPEC.md` + `TASK.md`), or a standalone plan directo
 
 ## Completion check
 
-- Read the track — `TASK.md` for a spec, `PLAN.md` for a standalone plan. It is complete only when every task is `- [x]` with a commit reference and the **Open** section is empty.
+- Read the track — `TASK.md` for a spec, `PLAN.md` for a standalone plan. It is complete only when every task is `- [x] ✅` with a commit reference and the **Open** section is empty. `Status: ✅ complete` on the track is the expected signal (tracks predating the status line pass on the tasks alone).
 - For a spec, read every nested plan under `plans/{plan-slug}/PLAN.md` too. The spec archives only when its own track AND all of them are complete.
-- If any task is `- [ ]` or **Open** is non-empty, do NOT archive. List the unfinished tasks and open items — naming the track each one belongs to — then stop.
+- If any task is `- [ ]` — a ✋ task especially, it's waiting on the user — or **Open** is non-empty, do NOT archive. List the unfinished tasks and open items — naming the track each one belongs to — then stop.
 
 ## Archive
 

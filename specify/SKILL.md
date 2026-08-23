@@ -24,24 +24,32 @@ Work the tree in rounds:
 - MUST: Treat a running sub-agent as an unsettled prerequisite — it blocks only the questions downstream of it, so ask the rest of the frontier now.
 - MUST: Keep going until the frontier is empty — every branch of the tree visited, nothing left silently assumed.
 
-Number each question and give your recommended answer:
+Number each question, classify its impact, and give your recommended answer:
+
+- 🚨 `[high impact]` — expensive to reverse: changes a contract, the architecture, or the scope. Urgency signal; I review these carefully before approving.
+- ⚠️ `[moderate impact]` — changes behavior, but reversible. An alert.
+- `[low impact]` — follows the flow; no emoji.
 
 ```
 **Round 2**
 
-1. When a rep leaves a territory, do the commissions already generated
-   stay with them?
-   → Recommendation: yes — the commission belongs to whoever held the
+1. 🚨 [high impact] When a rep leaves a territory, do the commissions
+   already generated stay with them?
+   💡 Recommendation: yes — the commission belongs to whoever held the
      territory on the sale date.
-   → Tradeoff: stable history, but the territory has to be stored on the
+   ⚖️ Tradeoff: stable history, but the territory has to be stored on the
      commission itself instead of derived from the rep.
 
-2. Who can see a commission that belongs to a rep who left?
-   → Recommendation: the same people who could see it before — leaving
+2. ⚠️ [moderate impact] Who can see a commission that belongs to a rep
+   who left?
+   💡 Recommendation: the same people who could see it before — leaving
      doesn't change visibility.
-   → Tradeoff: no new permission, but a former rep keeps showing up in
+   ⚖️ Tradeoff: no new permission, but a former rep keeps showing up in
      the territory report.
 ```
+
+- MUST: Classify every question — the classification applies wherever the question is delivered, text rounds and AskUserQuestion alike (put the emoji in the question text or header).
+- MUST: Record every settled decision with a 🤝 prefix — in the round recap and in the spec's decision bullets — so a closed decision is visibly closed.
 
 ## Rules
 
@@ -79,6 +87,7 @@ The spec is finished only when nothing is open. There is no **Open** section, no
 
 Write `SPEC.md` to `$PWD/specs/{slug}/`, where `{slug}` is a short kebab-case name derived from $ARGUMENTS.
 
+- The file opens with `Status: 🔍 specified` right under the title — the 🔍 marks design-phase artifacts; lifecycle from there lives in the track (`/write-tasks`, `/implement`).
 - One section per requirement, containing BOTH its requirement (`R1`, `R2`, …) AND its technical design.
 - Every requirement in plain language: the behavior, plus its acceptance criteria as a bullet list of observable outcomes.
 - Record the design, not the process: what changes where, and the decisions we agreed on.

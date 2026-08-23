@@ -66,7 +66,12 @@ A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit f
 
 ## Tracking
 
-- MUST: Update the task's line in the track file the moment it's done — mark it `- [x]`. Don't batch this to the end.
+The track carries live emoji status signals, so a future session — or the user — reads the state by scanning, not by reading everything:
+
+- MUST: Set the track's `Status:` line to `🚀 implementing` the moment the run starts (it arrives as `Status: 🔍 ready to implement`; add the line if the track predates it).
+- MUST: Mark a task the moment you start executing or dispatch it: `- [ ] 🚀 T-N — …`.
+- MUST: Update the task's line the moment it's done — `- [x] ✅ T-N — … — commit: <sha>` — checkbox, ✅ and commit reference together. Don't batch this to the end.
+- MUST: Leave a task `- [ ]` when it can't meet its criteria, note the blocker under **Open**, and don't mark it done. When the blocker is something only the user can resolve, mark both with ✋: `- [ ] ✋ T-N — …` and the ✋-prefixed **Open** entry.
+- MUST: End the run by setting the final status: every task `- [x] ✅` → `Status: ✅ complete`; anything left under **Open** → `Status: ✋ blocked`.
 - MUST: Keep the track file accurate. It's the live source of truth, so progress is readable from the file at any point.
-- MUST: Leave a task `- [ ]` when it can't meet its criteria, note the blocker under **Open**, and don't mark it done.
 - MUST: If implementing reveals the design is wrong or a requirement is underspecified, note it under **Open** with what you found, skip the affected tasks, and continue with the rest — don't decide it yourself and don't halt the run for it. Surface everything under **Open** in your final report.

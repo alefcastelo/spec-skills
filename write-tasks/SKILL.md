@@ -59,18 +59,22 @@ Task body:
 
 Write `TASK.md` next to the spec, in `$PWD/specs/{slug}/`.
 
-`TASK.md` — the local track, live source of truth. One section per slice, its tasks under it:
+`TASK.md` — the local track, live source of truth. It opens with a status line, then one section per slice, its tasks under it:
 
 ```
+# TASK — {slug}
+
+Status: 🔍 ready to implement
+
 ## S1 — Contact e-mails become one-to-many
 
 - [ ] T-1 — Add contact_emails table and migration — repo: api — commit: —
 - [ ] T-2 — Move the existing contact e-mail into the new table — repo: api — blocked by: T-1 — commit: —
 ```
 
-- One checkbox line per task: `- [ ] T-N — title — repo: <repo> — blocked by: T-M — commit: —`
-- `- [x]` only when the task is implemented; `/implement` fills the commit reference and flips the checkbox.
-- A slice is shippable when every task under it is `- [x]` — it carries no checkbox of its own.
+- One checkbox line per task: `- [ ] T-N — title — repo: <repo> — blocked by: T-M — commit: —` — no status emoji at creation; the task hasn't started.
+- Status emojis are written by `/implement` as it runs: 🚀 task started, `- [x] ✅` task done (with the commit reference filled), ✋ task waiting on the user. The `Status:` line moves `🔍 ready to implement` → `🚀 implementing` → `✅ complete` (or `✋ blocked`).
+- A slice is shippable when every task under it is `- [x] ✅` — it carries no checkbox of its own.
 - No **Open** section. `/implement` reserves it for blockers found while implementing; nothing is parked there in advance.
 
 Then tell me the track is ready for `/implement`, listing anything I decided during this run that the spec didn't already say.

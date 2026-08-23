@@ -44,15 +44,15 @@ Present everything you found in one numbered list, before touching the document.
 1. [blocker] R3 says the report is visible to any authenticated user, but
    `ReportPolicy#show` (app/policies/report_policy.rb:14) scopes it to the
    owning team.
-   → Recommendation: keep the policy and narrow R3 to the owning team.
-   → Tradeoff: matches today's permissions, but the "share with a client"
+   💡 Recommendation: keep the policy and narrow R3 to the owning team.
+   ⚖️ Tradeoff: matches today's permissions, but the "share with a client"
      flow in R5 then needs its own token.
 
 2. [important] No requirement says what the dashboard shows before the first
    report exists.
-   → Recommendation: empty state with the same copy as the invoices list
+   💡 Recommendation: empty state with the same copy as the invoices list
      (app/views/invoices/_empty.html.erb:1) — reuse instead of a new one.
-   → Tradeoff: one less component to build, but the copy is generic.
+   ⚖️ Tradeoff: one less component to build, but the copy is generic.
 ```
 
 ## Rounds

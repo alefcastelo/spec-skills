@@ -58,9 +58,8 @@ Invariants — they hold at every moment of the session.
 - MUST: Give every requirement an ID (`R1`, `R2`, …) — that's what the tasks will reference.
 - SHOULD: Use my vocabulary from `@<path-to-your-md-files>` so the spec sounds like me.
 - SHOULD: Write every requirement in plain language, the way I'd describe it to a customer.
-- MUST: Show a short code example for each option whenever a question offers different implementations (architectures, patterns, API shapes) — code is easier to compare than prose.
-- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad variable names. Never ignore them (boy scout rule: leave the code better than you found it), and never fold them into the central change: propose each as a separate PR, and present the PR stack in merge order for my review.
-- SHOULD: Show a short code example when a contract or a data shape is easier to show than to say.
+- MUST: Show a short code example whenever a question offers different implementations (architectures, patterns, API shapes), or a contract or data shape is easier to show than to say — code is easier to compare than prose.
+- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad variable names. Never ignore them (boy scout rule: leave the code better than you found it), and never fold them into the central change: each becomes a **side plan** (`/plan`) shipping as its own separate PR, and the stack is presented in merge order for my review. `/implement` treats a side plan as an extra delivery, never part of the main PR.
 - SHOULD: Make your recommendation a user story (`As a <role>, I want <action>, so that <value>`) when my description is ambiguous, and ask me to confirm or correct it.
 - SHOULD: Settle the whole tree in a single round when the change touches one module and no contract — tell me which path you're taking and why.
 - DON'T: Act on the design until I confirm we have reached a shared understanding.

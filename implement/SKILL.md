@@ -11,8 +11,7 @@ Implement the tasks for this spec or plan, or pick the next track when none is g
 
 A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit format, same rules below.
 
-- If $ARGUMENTS names a spec (spec dir, `SPEC.md`, `TASK.md`, or a task that belongs to one), implement **all** of its tasks.
-- If $ARGUMENTS names a plan (a standalone `specs/{slug}/PLAN.md` or a nested `specs/{spec-slug}/plans/{plan-slug}/PLAN.md`, its directory, or a task that belongs to one), implement **all** of its tasks.
+- If $ARGUMENTS names a track — a spec (its dir, `SPEC.md`, `TASK.md`), a plan (standalone `specs/{slug}/PLAN.md` or nested `specs/{spec-slug}/plans/{plan-slug}/PLAN.md`, or its dir), or a task that belongs to one — implement **all** of its tasks.
 - If $ARGUMENTS names a single task with no spec, implement just that one.
 - Otherwise read the `TASK.md` and `PLAN.md` files under `specs/` — nested `plans/` included — and pick the track whose tasks have all their blockers done.
 
@@ -26,7 +25,7 @@ A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit f
 
 ## Sizing
 
-- MUST: Size the run from `TASK.md` before you start, and note which path you're taking and why — then proceed without waiting.
+- MUST: Size the run from the track before you start, and note which path you're taking and why — then proceed without waiting.
 - MUST: Fan out to parallel agents when the spec is medium to big — more than one slice, or more than a handful of tasks.
 - SHOULD: Delegate implementation to subagents even for a small spec — the main agent orchestrates and verifies, keeping its own context clean. Implement in the main agent only when the change is trivial (one task, few files).
 
@@ -35,7 +34,7 @@ A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit f
 - MUST: Dispatch one agent per slice — the tasks in a slice touch the same files, so they belong to the same agent, in dependency order.
 - MUST: Work in waves. A wave is every slice whose blockers outside it are already implemented.
 - MUST: Dispatch the whole wave in a single message so its agents run concurrently, and wait for all of them before computing the next wave.
-- MUST: Keep `TASK.md` yours. Agents report back; you flip the checkbox. Two agents writing that file clobber each other.
+- MUST: Keep the track file yours. Agents report back; you flip the checkbox. Two agents writing that file clobber each other.
 - CAN: Split a slice across agents when it's large and its tasks don't touch the same files.
 - DON'T: Start a task whose blockers aren't implemented yet.
 - DON'T: Implement anything yourself while a wave is running — you orchestrate and verify.
@@ -52,6 +51,7 @@ A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit f
 ## Handover
 
 - MUST: Finish by pushing the branch and opening the PR, with a description that carries the before/after numbers and the per-file lists a light review needs.
+- MUST: One track, one branch, one PR. A **side plan** — the boy scout stack `/specify` and `/plan` produce for findings beyond the original ask — is an extra delivery: implement it as its own run, on its own branch and PR, never folded into the central change's PR.
 - MUST: **Stop there.** Do not watch the CI, do not fix a failing pipeline, do not review your own work — the agent that wrote the code is the worst judge of it, it will confirm what it meant instead of reading what it wrote.
 - MUST: End by telling the user the PR is open.
 
@@ -66,7 +66,7 @@ A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit f
 
 ## Tracking
 
-- MUST: Update the task's line in `TASK.md` the moment it's done — mark it `- [x]`. Don't batch this to the end.
-- MUST: Keep `TASK.md` accurate. It's the live source of truth, so progress is readable from the file at any point.
+- MUST: Update the task's line in the track file the moment it's done — mark it `- [x]`. Don't batch this to the end.
+- MUST: Keep the track file accurate. It's the live source of truth, so progress is readable from the file at any point.
 - MUST: Leave a task `- [ ]` when it can't meet its criteria, note the blocker under **Open**, and don't mark it done.
 - MUST: If implementing reveals the design is wrong or a requirement is underspecified, note it under **Open** with what you found, skip the affected tasks, and continue with the rest — don't decide it yourself and don't halt the run for it. Surface everything under **Open** in your final report.

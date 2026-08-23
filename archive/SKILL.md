@@ -26,7 +26,7 @@ Archive the spec directory (`SPEC.md` + `TASK.md`), or a standalone plan directo
 The archive does not conclude without this step.
 
 - MUST: Extract the learning candidates from this execution — decisions taken, mistakes corrected, course changes recorded in the track's history, **Open** notes and the summary.
-- MUST: Run the `/learning` flow on every candidate. Each one is stored only with the user's explicit approval, per that skill's rules (validation, INDEX line + detailed doc, overlap check, supersede vs refine).
+- MUST: Run the `/learning` flow on every candidate. Each one is stored only with the user's explicit approval, per that skill's rules — `/learning` owns the how.
 - MUST: Accept "no learning from this execution" as a valid outcome — but only after asking, with the user confirming it.
 - DON'T: Store anything directly from here. `/learning` is the only gate to `docs/learnings/`.
 

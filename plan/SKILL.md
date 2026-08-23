@@ -46,7 +46,7 @@ Invariants — they hold at every moment of the session.
 - MUST: Never fill a gap with an assumption. A gap is a question — for the code first, for me when the code can't know.
 - MUST: The decisions are mine. Put each one to me, with your recommendation.
 - MUST: Settle everything before writing `PLAN.md`. It ships with no **Open** section and no "we'll decide during implementation" — a question parked here comes back as an interruption in the middle of `/implement`.
-- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad names. Never ignore them (boy scout rule), and never fold them into the central change: propose each as its own task or its own plan, and tell me the order.
+- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad names. Never ignore them (boy scout rule), and never fold them into the central change: each becomes a **side plan** — its own plan, shipped as its own PR — and the stack is presented to me in merge order. `/implement` treats a side plan as an extra delivery, never part of the main PR.
 - SHOULD: Show a short code example when a contract, a data shape or two competing implementations are easier to show than to say.
 - DON'T: Design the product. If the change turns out to need a real WHAT — new behavior, new experience, decisions a customer would notice — stop and tell me to run `/specify` instead.
 - DON'T: Start implementing. This skill produces `PLAN.md` only.

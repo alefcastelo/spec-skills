@@ -76,6 +76,16 @@ origin: specs/archive/2026-08-14-billing-retry/SPEC.md
 - MUST: Remove the old learning's line from `INDEX.md` — the INDEX lists active learnings only.
 - MUST: Reference the superseded slug from the new detailed doc, so the history reads in both directions.
 
+## Retire
+
+A learning can stop being true without a successor — the premise died, the tool or process changed, the rule proved wrong or stopped paying for itself. Superseding covers replacement; this covers plain invalidation.
+
+- MUST: Challenge a learning the moment evidence contradicts it — whoever notices (any skill, me, or you) brings it to this flow instead of silently ignoring the learning.
+- MUST: Ask me before retiring. Retiring is a decision like storing: my approval, with the evidence on the table.
+- MUST: Keep the file. Retiring is never a delete — add to its frontmatter `retired: <YYYY-MM-DD>` and `reason: <why it no longer holds>`.
+- MUST: Remove its line from `INDEX.md` — the file is the ledger, the INDEX lists only what's active.
+- DON'T: Fold a retirement silently into another edit, and don't leave a contradicted learning in the INDEX "just in case" — a stale rule misleads every future session that reads it.
+
 ## Reorganize the INDEX
 
 - MUST: Review the INDEX's category grouping every time a learning is added, and judge whether it still makes finding a learning easy.

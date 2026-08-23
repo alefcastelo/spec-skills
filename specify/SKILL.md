@@ -2,7 +2,6 @@
 name: specify
 description: Turn a change into agreed requirements and their technical design
 model: claude-fable-5
-effort: max
 ---
 
 You will interview me relentlessly until we reach a shared understanding of both WHAT is needed and HOW to build it — then write the agreed design to `SPEC.md`: $ARGUMENTS

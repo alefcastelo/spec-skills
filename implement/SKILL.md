@@ -2,6 +2,7 @@
 name: implement
 description: Implement a spec's or plan's tasks end-to-end
 model: claude-sonnet-5
+effort: max
 ---
 
 Implement the tasks for this spec or plan, or pick the next track when none is given: $ARGUMENTS

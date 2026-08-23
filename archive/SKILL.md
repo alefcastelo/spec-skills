@@ -2,6 +2,7 @@
 name: archive
 description: Archive an executed spec or standalone plan
 model: claude-sonnet-5
+effort: max
 ---
 
 Archive the spec directory (`SPEC.md` + `TASK.md`), or a standalone plan directory (`PLAN.md`), once its tasks are all implemented: $ARGUMENTS

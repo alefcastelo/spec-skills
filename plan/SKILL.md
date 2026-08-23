@@ -2,7 +2,6 @@
 name: plan
 description: Plan a refactoring, a fix or a simple change straight into an executable track
 model: claude-fable-5
-effort: max
 ---
 
 You will investigate the code, settle whatever only I can settle, and write the agreed change to `PLAN.md`: $ARGUMENTS

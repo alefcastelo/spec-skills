@@ -60,12 +60,11 @@ slug: prefer-repository-over-raw-query
 category: architecture
 created: 2026-08-22                # every learning carries its creation date
 origin: specs/archive/2026-08-14-billing-retry/SPEC.md
-# lifecycle — exactly one of these blocks appears when the learning leaves the INDEX:
+# lifecycle — when the learning leaves the INDEX, ONE of these appears, plus reason:
 # superseded_by: <new-slug>        # replaced by another learning
 # superseded_at: <YYYY-MM-DD>
-# reason: <why the new one wins>
 # retired: <YYYY-MM-DD>            # invalidated with no successor
-# reason: <why it no longer holds>
+# reason: <why it no longer holds / why the new one wins>
 ---
 ```
 

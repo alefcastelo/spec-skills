@@ -58,8 +58,14 @@ Both levels use the same layout — `INDEX.md` + `{slug}/{slug}.md`:
 ---
 slug: prefer-repository-over-raw-query
 category: architecture
-date: 2026-08-22
+created: 2026-08-22                # every learning carries its creation date
 origin: specs/archive/2026-08-14-billing-retry/SPEC.md
+# lifecycle — exactly one of these blocks appears when the learning leaves the INDEX:
+# superseded_by: <new-slug>        # replaced by another learning
+# superseded_at: <YYYY-MM-DD>
+# reason: <why the new one wins>
+# retired: <YYYY-MM-DD>            # invalidated with no successor
+# reason: <why it no longer holds>
 ---
 ```
 
@@ -67,12 +73,12 @@ origin: specs/archive/2026-08-14-billing-retry/SPEC.md
 - MUST: Create the level's root and `INDEX.md` on demand when they don't exist yet.
 - MUST: Write to the chosen level directly. Never copy or mirror a learning between levels — it lives in exactly one place.
 - MUST: Set `origin` to the spec or plan that produced the learning, so the decision can be traced back.
-- MUST: Resolve the date as `YYYY-MM-DD` (run `date +%F`) — never guess it.
+- MUST: Resolve every date as `YYYY-MM-DD` (run `date +%F`) — never guess it.
 
 ## Supersede
 
 - MUST: Keep the old file. Superseding is never a delete.
-- MUST: Add to the old file's frontmatter: `superseded_by: {slug}`, the date, and the reason.
+- MUST: Add to the old file's frontmatter: `superseded_by: <new-slug>`, `superseded_at: <YYYY-MM-DD>`, and `reason:` — the old learning always points at the one that replaced it.
 - MUST: Remove the old learning's line from `INDEX.md` — the INDEX lists active learnings only.
 - MUST: Reference the superseded slug from the new detailed doc, so the history reads in both directions.
 

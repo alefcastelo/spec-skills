@@ -1,7 +1,7 @@
 ---
 name: learning
 description: Validate a candidate learning and store it with user approval, managing supersedes
-model: claude-fable-5
+model: claude-opus-5
 effort: max
 ---
 

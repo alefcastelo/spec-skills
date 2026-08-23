@@ -1,7 +1,7 @@
 ---
 name: write-tasks
 description: Break an agreed spec into shippable slices and the tasks that build them
-model: claude-opus-5
+model: claude-sonnet-5
 ---
 
 You will read the agreed spec and break it into slices, each slice into tasks, writing them to `TASK.md`: $ARGUMENTS

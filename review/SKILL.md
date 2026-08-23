@@ -1,7 +1,7 @@
 ---
 name: review
 description: Review a PR and post the findings as comments on the PR
-model: claude-fable-5
+model: claude-opus-5
 effort: max
 ---
 

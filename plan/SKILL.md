@@ -16,7 +16,7 @@ This is the light sibling of `/specify`. Use it when thinking the whole feature 
 - MUST: Dispatch sub-agents for the exploration and keep the main context clean — one focused question per agent, findings back, not file dumps.
 - MUST: Investigate before proposing anything new — reuse the existing use cases, entities and components first.
 - MUST: Check my premises against the code. When what I say and what the code says disagree, tell me what the code actually does before we plan on top of it.
-- MUST: Read `docs/learnings/INDEX.md` when the project has one, and open `docs/learnings/{slug}/{slug}.md` for the ones that touch this change. A learning that applies is a constraint on the plan, not a suggestion.
+- MUST: Read the learnings — global `~/.claude/learnings/INDEX.md` and the project's `docs/learnings/INDEX.md`, when they exist — and open `{slug}/{slug}.md` for the ones that touch this change. A learning that applies is a constraint on the plan, not a suggestion.
 - MUST: Ask only what only I can answer — product intent or an architectural call. Everything else you find yourself.
 
 ## Adaptive depth

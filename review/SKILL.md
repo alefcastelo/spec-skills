@@ -23,7 +23,7 @@ You review and comment. You never push a fix.
 - MUST: Get the diff with `gh pr diff <n> --patch` — you need the patch hunks and their line numbers to place inline comments.
 - MUST: Open every file the diff touches at its current state, plus the code that calls it and the code it calls.
 - MUST: Look for the existing thing before flagging a duplicate, and for the existing abstraction before proposing a new one — dispatch sub-agents to search, keeping your own context clean.
-- MUST: Read `docs/learnings/INDEX.md` when it exists, and read `docs/learnings/{slug}/{slug}.md` for any entry that looks related to this change.
+- MUST: Read the learnings — global `~/.claude/learnings/INDEX.md` and the project's `docs/learnings/INDEX.md`, when they exist — and read `{slug}/{slug}.md` for any entry that looks related to this change.
 
 ## Axes
 

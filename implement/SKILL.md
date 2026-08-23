@@ -43,7 +43,7 @@ A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit f
 
 - MUST: Read the spec's `SPEC.md` first. Each task points at a requirement (`R1`, `R2`, …) whose acceptance criteria and technical design live there — implement the design we agreed on, don't redesign it. Every agent you dispatch reads it too.
 - MUST: For a plan, read the `PLAN.md` itself as that context — it carries its own requirements and acceptance criteria — plus the owning `SPEC.md` when the plan references it. Flip the checkboxes and fill the commit references in the `PLAN.md`, same format.
-- MUST: Read the project's `docs/learnings/INDEX.md` when it has one before implementing, opening `docs/learnings/{slug}/{slug}.md` for the ones that touch this work, and pass the relevant learnings to every agent you dispatch.
+- MUST: Read the learnings before implementing — global `~/.claude/learnings/INDEX.md` and the project's `docs/learnings/INDEX.md`, when they exist — opening `{slug}/{slug}.md` for the ones that touch this work, and pass the relevant learnings to every agent you dispatch.
 - MUST: One task at a time within an agent, in dependency order. Finish a task's code before starting the next.
 - MUST: Write each task's acceptance criteria into code — the assertion, the endpoint, the file — as written. The criteria define what to build; whether they hold is settled by the slice's verification run, not by a suite per task.
 - MUST: Commit **once** at the end, after the last task, with the hook (plain `git commit`) so the full pipeline validates every change. It must be green.

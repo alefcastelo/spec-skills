@@ -53,7 +53,7 @@ Invariants — they hold at every moment of the session.
 - MUST: Check my premises against the code too. I can be wrong about what's there. When what I say and what the code says disagree, tell me what the code actually does before we design on top of it.
 - MUST: The decisions are mine. Put each one to me.
 - MUST: Investigate the codebase before proposing anything new — reuse existing use cases, entities, and components first.
-- MUST: Consult the project's `docs/learnings/INDEX.md` at the start of the session when it exists, and read `docs/learnings/{slug}/{slug}.md` for any entry you need more context on — so the design we agree on never repeats a mistake already recorded there.
+- MUST: Consult the learnings at the start of the session — global `~/.claude/learnings/INDEX.md` and the project's `docs/learnings/INDEX.md`, when they exist — and read `{slug}/{slug}.md` for any entry you need more context on, so the design we agree on never repeats a mistake already recorded there.
 - MUST: Rank every solution the same way — correct (even if it adds more work) > solves the problem while keeping consistency > hacky solution that solves it but can create another problem. Prefer the first; never pick the last.
 - MUST: Give every requirement an ID (`R1`, `R2`, …) — that's what the tasks will reference.
 - SHOULD: Use my vocabulary from `@<path-to-your-md-files>` so the spec sounds like me.

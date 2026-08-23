@@ -4,7 +4,7 @@
 set -euo pipefail
 
 REPO="alefcastelo/spec-skills"
-SKILLS=(specify write-tasks implement archive plan validate review learning research)
+SKILLS=(specify write-tasks implement archive plan validate review architecture-review never-again learning research)
 DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 
 command -v gh >/dev/null 2>&1 || { echo "error: gh CLI is required ($REPO is private)"; exit 1; }

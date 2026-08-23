@@ -23,7 +23,14 @@ You review and comment. You never push a fix.
 - MUST: Get the diff with `gh pr diff <n> --patch` — you need the patch hunks and their line numbers to place inline comments.
 - MUST: Open every file the diff touches at its current state, plus the code that calls it and the code it calls.
 - MUST: Look for the existing thing before flagging a duplicate, and for the existing abstraction before proposing a new one — dispatch sub-agents to search, keeping your own context clean.
-- MUST: Read the learnings — global `~/.claude/learnings/INDEX.md` and the project's `docs/learnings/INDEX.md`, when they exist — and read `{slug}/{slug}.md` for any entry that looks related to this change.
+
+## Delegated checks
+
+- MUST: Invoke the `architecture-review` and `never-again` skills via the Skill tool in a single message so both run in parallel — each is a forked sub-agent. Pass the PR number as the argument: a fork inherits nothing, so the argument is the whole handoff.
+- MUST: Wait for both results before composing any comment.
+- MUST: Fold their findings into the `principle` and `learning` axes.
+- MUST: Re-anchor every delegated finding to the patch hunks, and discard any that cannot anchor to a diff line.
+- MUST: Count delegated findings toward the verdict exactly like your own findings.
 
 ## Axes
 
@@ -34,48 +41,8 @@ Every finding belongs to exactly one axis, and every comment names its axis.
 3. **extra** — implemented beyond the agreed scope: code the SPEC/PLAN never asked for, speculative generality, an unused flag, an unrelated refactor riding along.
 4. **missing** — the SPEC/PLAN asks for it and the PR does not deliver it. Cite the requirement (`R<n>`) or task (`T-<n>`).
 5. **reuse** — *look hardest here.* Logic that is correct but locked where nobody else can use it: business rule inlined in a controller/handler/component, a copy of something that already exists, a private helper that belongs in the domain, a rule that cannot be tested without booting the framework, a shape hard-coded instead of derived. Say where it belongs and who else would call it.
-6. **principle** — violates SOLID, Hexagonal Architecture, Object Calisthenics, or a pattern's intent. Use the checklist below.
-7. **learning** — repeats a mistake already recorded in `docs/learnings/`. Link the learning doc.
-
-## Principles checklist
-
-A reviewer's checklist, not a treatise. Flag a violation only when it hurts this code — never as trivia.
-
-**SOLID**
-
-- One reason to change per class; a class that formats, persists and decides is three classes.
-- Extend without editing: a new case should not mean a new branch in an old `switch`.
-- Subtypes substitute cleanly — no `NotImplemented`, no narrowed contract, no widened precondition.
-- Interfaces are client-shaped and narrow; no implementer stubbing methods it does not need.
-- Depend on abstractions: high-level policy must not import a concrete driver, SDK or ORM.
-
-**Hexagonal Architecture**
-
-- Dependency direction points inward: domain ← application ← adapters. Never the reverse.
-- Domain imports no framework, HTTP, ORM, queue or clock.
-- Ports are interfaces owned by the inside; adapters implement them.
-- No logic in adapters — controllers, repositories, jobs and presenters translate, they do not decide.
-- Use cases orchestrate; entities hold the rules.
-- The domain is testable with no IO. If a rule needs a container to test, it is in the wrong layer.
-
-**Object Calisthenics**
-
-- One level of indentation per method; extract instead of nesting.
-- Prefer a guard clause to `else`.
-- Wrap primitives that carry meaning (money, id, email) in a type.
-- First-class collections: a class holding a collection holds nothing else.
-- One dot per line — no `a.getB().getC().getD()` chains; tell, don't ask.
-- No getter/setter pairs that turn an object into a record; put the behavior on the object.
-- Small classes, short methods, few instance fields; no abbreviated names.
-
-**Design Patterns**
-
-- Name the pattern when you propose one, and say what it buys here — "extract a Strategy so a new payment type adds a class, not a branch".
-- Prefer composition over inheritance; flag inheritance used for reuse instead of substitution.
-- Flag misapplied patterns as loudly as missing ones: singleton hiding global state, service locator hiding dependencies, anemic entities with all the logic in services, a factory that only calls `new`.
-- Do not propose a pattern that adds indirection the code does not need yet.
-
-> Scope note: shared, versioned guidelines (SOLID / Hexagonal / Calisthenics / Patterns) will replace this embedded checklist in a future change. Until then this list is the source of truth for the `principle` axis.
+6. **principle** — violates the architecture guidelines. Fed by `architecture-review`'s findings. Link the guideline doc.
+7. **learning** — repeats a mistake already recorded in the learnings. Fed by `never-again`'s findings. Link the learning doc.
 
 ## Comments
 

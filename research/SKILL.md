@@ -1,7 +1,6 @@
 ---
 name: research
 description: Answer questions from external sources, validate hypotheses, and build a living research document under docs/research/
-model: claude-fable-5
 ---
 
 Research questions whose answers live OUTSIDE the codebase — markets, competitors, keywords, standards, APIs, pricing, user behavior — and record every validated finding in a living document under `docs/research/`: $ARGUMENTS

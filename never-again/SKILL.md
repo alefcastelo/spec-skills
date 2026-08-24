@@ -1,7 +1,6 @@
 ---
 name: never-again
 description: Validate changed code against recorded learnings and report repeated mistakes
-model: claude-sonnet-5
 effort: max
 context: fork
 agent: general-purpose
@@ -23,13 +22,13 @@ You validate and report. You never post comments, never edit code, never push.
 
 ## Learnings
 
-Learnings live at two levels, and both bind: global rules apply in every repo, project rules in this one.
+Learnings live in this project: `docs/learnings/`.
 
-- MUST: Load both INDEXes when they exist — global `~/.claude/learnings/INDEX.md` and the project's `docs/learnings/INDEX.md`. The INDEX lists active learnings only, so what is there is the whole active set.
+- MUST: Load `docs/learnings/INDEX.md` when it exists. The INDEX lists active learnings only, so what is there is the whole active set.
 - MUST: Weigh every INDEX entry against the change. The one-line entry exists to decide whether to open the doc — open it whenever the entry could plausibly apply.
-- MUST: Open the learning's detailed doc — `{slug}/{slug}.md` under its level's root — before confirming any finding. Never report from the one-line INDEX entry alone; the doc carries the rule, the why, and how to apply it.
+- MUST: Open the learning's detailed doc — `{slug}/{slug}.md` under `docs/learnings/` — before confirming any finding. Never report from the one-line INDEX entry alone; the doc carries the rule, the why, and how to apply it.
 - DON'T: Dig through learning files absent from the INDEX. A file with no INDEX line is superseded or retired — it no longer binds.
-- MUST: Report zero findings and say no learnings are recorded when neither INDEX exists. That is a valid result, not an error.
+- MUST: Report zero findings and say no learnings are recorded when the INDEX doesn't exist. That is a valid result, not an error.
 
 ## Findings
 
@@ -51,7 +50,7 @@ A finding is a change that repeats a mistake recorded in a learning.
    💡 The learning prescribes: wrap the id in its type at the boundary.
 
 2. scripts/migrate.sh:12 — repeats **[dates-from-the-clock]**
-   → ~/.claude/learnings/dates-from-the-clock/dates-from-the-clock.md
+   → docs/learnings/dates-from-the-clock/dates-from-the-clock.md
    The script hard-codes today's date; the learning says dates are always
    resolved from the clock (`date +%F`), never guessed.
    💡 The learning prescribes: resolve the date at run time.

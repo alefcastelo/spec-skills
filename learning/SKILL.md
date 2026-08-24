@@ -1,7 +1,6 @@
 ---
 name: learning
 description: Validate a candidate learning and store it with user approval, managing supersedes
-model: claude-opus-5
 effort: max
 ---
 
@@ -38,21 +37,16 @@ For every candidate that survives validation, draft BOTH pieces before asking me
 
 ## Overlap
 
-- MUST: Read both INDEXes — global `~/.claude/learnings/INDEX.md` and project `docs/learnings/INDEX.md` — and open the detailed docs of any entry that looks related, before asking me to store. Overlap across levels counts.
+- MUST: Read `docs/learnings/INDEX.md` and open the detailed docs of any entry that looks related, before asking me to store.
 - MUST: Tell me exactly what overlaps and how, when it does — quote both rules side by side.
 - MUST: Ask me to choose: **supersede** the old learning, or **refine both** so they coexist without ambiguity.
 - DON'T: Decide between supersede and refine on your own. That call is always mine.
 
 ## Store
 
-Learnings live at two levels. Decide the scope with me — recommend one per candidate:
+Learnings live in this project only: `$PWD/docs/learnings/`, laid out as `INDEX.md` + `{slug}/{slug}.md`:
 
-- **Project** — the rule is about this codebase: `$PWD/docs/learnings/`.
-- **Global** — the rule is about the process, the skills, or how we work anywhere: `~/.claude/learnings/`.
-
-Both levels use the same layout — `INDEX.md` + `{slug}/{slug}.md`:
-
-- Detailed doc: `{slug}/{slug}.md` under the level's root, with frontmatter:
+- Detailed doc: `{slug}/{slug}.md` under `docs/learnings/`, with frontmatter:
 
 ```yaml
 ---
@@ -68,9 +62,8 @@ origin: specs/archive/2026-08-14-billing-retry/SPEC.md
 ---
 ```
 
-- Entry point: `INDEX.md` at the level's root — sections by category, 1–2 lines per ACTIVE learning, each linking to its detailed doc.
-- MUST: Create the level's root and `INDEX.md` on demand when they don't exist yet.
-- MUST: Write to the chosen level directly. Never copy or mirror a learning between levels — it lives in exactly one place.
+- Entry point: `docs/learnings/INDEX.md` — sections by category, 1–2 lines per ACTIVE learning, each linking to its detailed doc.
+- MUST: Create `docs/learnings/` and `INDEX.md` on demand when they don't exist yet.
 - MUST: Set `origin` to the spec or plan that produced the learning, so the decision can be traced back.
 - MUST: Resolve every date as `YYYY-MM-DD` (run `date +%F`) — never guess it.
 
@@ -99,4 +92,4 @@ A learning can stop being true without a successor — the premise died, the too
 
 ## Consumption
 
-`/specify`, `/plan`, `/review` and `/implement` read both INDEXes first — global `~/.claude/learnings/INDEX.md`, then the project's `docs/learnings/INDEX.md` — and open a detailed doc only when they need more context. Write both pieces for that split: the INDEX line has to be enough to decide, the detailed doc has to be enough to act.
+`/specify`, `/plan`, `/review` and `/implement` read `docs/learnings/INDEX.md` first and open a detailed doc only when they need more context. Write both pieces for that split: the INDEX line has to be enough to decide, the detailed doc has to be enough to act.

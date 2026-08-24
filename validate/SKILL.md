@@ -1,7 +1,6 @@
 ---
 name: validate
 description: Validate a SPEC.md or PLAN.md against gaps and code inconsistencies before implementation
-model: claude-opus-5
 effort: max
 ---
 

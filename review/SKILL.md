@@ -1,7 +1,6 @@
 ---
 name: review
 description: Review a PR and post the findings as comments on the PR
-model: claude-opus-5
 effort: max
 ---
 
@@ -26,9 +25,9 @@ You review and comment. You never push a fix.
 
 ## Delegated checks
 
-- MUST: Invoke the `architecture-review` and `never-again` skills via the Skill tool in a single message so both run in parallel — each is a forked sub-agent. Pass the PR number as the argument: a fork inherits nothing, so the argument is the whole handoff.
-- MUST: Wait for both results before composing any comment.
-- MUST: Fold their findings into the `principle` and `learning` axes.
+- MUST: Invoke the `never-again` skill via the Skill tool — it runs as a forked sub-agent. Pass the PR number as the argument: a fork inherits nothing, so the argument is the whole handoff.
+- MUST: Wait for its result before composing any comment.
+- MUST: Fold its findings into the `learning` axis.
 - MUST: Re-anchor every delegated finding to the patch hunks, and discard any that cannot anchor to a diff line.
 - MUST: Count delegated findings toward the verdict exactly like your own findings.
 
@@ -41,15 +40,14 @@ Every finding belongs to exactly one axis, and every comment names its axis.
 3. **extra** — implemented beyond the agreed scope: code the SPEC/PLAN never asked for, speculative generality, an unused flag, an unrelated refactor riding along.
 4. **missing** — the SPEC/PLAN asks for it and the PR does not deliver it. Cite the requirement (`R<n>`) or task (`T-<n>`).
 5. **reuse** — *look hardest here.* Logic that is correct but locked where nobody else can use it: business rule inlined in a controller/handler/component, a copy of something that already exists, a private helper that belongs in the domain, a rule that cannot be tested without booting the framework, a shape hard-coded instead of derived. Say where it belongs and who else would call it.
-6. **principle** — violates the architecture guidelines. Fed by `architecture-review`'s findings. Link the guideline doc.
-7. **learning** — repeats a mistake already recorded in the learnings. Fed by `never-again`'s findings. Link the learning doc.
+6. **learning** — repeats a mistake already recorded in the learnings. Fed by `never-again`'s findings. Link the learning doc.
 
 ## Comments
 
 `/plan`'s post-review mode reads these comments with none of this session in context. A comment that only makes sense to someone who watched the review is a comment that produces no fix.
 
 - MUST: Make every comment self-contained and actionable: what is wrong, why it is wrong, and what to do instead — concretely, in this file.
-- MUST: Open every comment with its axis in bold: `**[reuse]**`, `**[bug]**`, `**[principle — DIP]**`.
+- MUST: Open every comment with its axis in bold: `**[reuse]**`, `**[bug]**`, `**[gap]**`.
 - MUST: Show the replacement as a short code suggestion when the fix is a few lines. Use a ```suggestion block when it applies cleanly to the commented lines.
 - MUST: Attach the finding to the exact line that has to change, so the fix has an address.
 - SHOULD: Say what you checked when you clear a suspicion the diff invites — a reviewer's silence reads as "not looked at".
@@ -74,7 +72,7 @@ gh api repos/{owner}/{repo}/pulls/<n>/reviews --method POST --input review.json
   "body": "<summary>",
   "comments": [
     { "path": "src/app/Handler.php", "line": 42, "side": "RIGHT", "body": "**[reuse]** ..." },
-    { "path": "src/app/Handler.php", "start_line": 60, "line": 66, "side": "RIGHT", "body": "**[principle — SRP]** ..." }
+    { "path": "src/app/Handler.php", "start_line": 60, "line": 66, "side": "RIGHT", "body": "**[gap]** ..." }
   ]
 }
 ```
@@ -89,7 +87,7 @@ gh api repos/{owner}/{repo}/pulls/<n>/reviews --method POST --input review.json
 
 ## Verdict
 
-- MUST: Submit `REQUEST_CHANGES` when a grave problem exists — a bug, data loss or corruption, a broken contract, or a serious architectural violation (dependency direction inverted, business rule stranded in an adapter, agreed requirement missing).
+- MUST: Submit `REQUEST_CHANGES` when a grave problem exists — a bug, data loss or corruption, a broken contract, or an agreed requirement missing.
 - MUST: Submit `COMMENT` otherwise, however long the list of findings is.
 - DON'T: **Ever** submit `APPROVE`. Approving is the user's decision, not yours.
 

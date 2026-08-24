@@ -1,7 +1,6 @@
 ---
 name: archive
 description: Archive an executed spec, standalone plan, or research document
-model: claude-sonnet-5
 effort: max
 ---
 

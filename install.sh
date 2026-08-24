@@ -4,17 +4,14 @@
 set -euo pipefail
 
 REPO="alefcastelo/spec-skills"
-SKILLS=(specify write-tasks implement archive plan validate review architecture-review never-again learning research)
+SKILLS=(specify write-tasks implement archive plan validate review never-again learning research)
 DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
-
-command -v gh >/dev/null 2>&1 || { echo "error: gh CLI is required ($REPO is private)"; exit 1; }
-gh auth status >/dev/null 2>&1 || { echo "error: gh is not authenticated (run: gh auth login)"; exit 1; }
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
 echo "Downloading $REPO..."
-gh api "repos/$REPO/tarball" > "$tmp/repo.tar.gz"
+curl -fsSL "https://github.com/$REPO/archive/refs/heads/main.tar.gz" -o "$tmp/repo.tar.gz"
 mkdir -p "$tmp/src"
 tar -xzf "$tmp/repo.tar.gz" -C "$tmp/src" --strip-components=1
 

@@ -1,7 +1,6 @@
 ---
 name: write-tasks
 description: Break an agreed spec into shippable slices and the tasks that build them
-model: claude-sonnet-5
 effort: max
 ---
 

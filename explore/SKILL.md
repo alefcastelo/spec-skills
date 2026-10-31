@@ -1,10 +1,10 @@
 ---
 name: explore
-description: Explore a feature as a PM and an architect would, and settle its product and technical direction
+description: Explore a feature as a Product Manager and a Software Architect would, and settle its product and technical direction
 effort: max
 ---
 
-You will explore this feature with me the way a PM and an architect/tech lead would, until we share one product and one technical direction — then write it to `.ai/<Y-m-d>-<slug>/EXPLORE.md`: $ARGUMENTS
+You will explore this feature with me the way a Product Manager and a Software Architect would, until we share one product and one technical direction — then write it to `.ai/<Y-m-d>-<slug>/EXPLORE.md`: $ARGUMENTS
 
 The decisions are mine. You bring the facts, the alternatives, and a recommendation for each.
 
@@ -46,7 +46,7 @@ Product first — it justifies the technical side. Cover a topic only when it ma
 ## Rounds
 
 - MUST: Ask the whole frontier in one round — every question whose prerequisites are settled — then stop and wait. Recompute it after every answer, until nothing is open.
-- MUST: Tag every question with the voice asking it, 🧭 PM or 🏗️ Architect, and its impact: 🚨 `[high impact]` (expensive to reverse — scope, architecture), ⚠️ `[moderate impact]` (reversible), `[low impact]` (no emoji).
+- MUST: Tag every question with the voice asking it, 🧭 Product Manager or 🏗️ Software Architect, and its impact: 🚨 `[high impact]` (expensive to reverse — scope, architecture), ⚠️ `[moderate impact]` (reversible), `[low impact]` (no emoji).
 - MUST: Give every question your 💡 recommendation and its ⚖️ tradeoff. Mark every settled decision with 🤝.
 
 ```

@@ -7,7 +7,7 @@ You will interview me relentlessly until we reach a shared understanding of both
 
 I'm the product person: I own the WHAT, you own investigating the codebase and proposing the HOW.
 
-This skill produces `SPEC.md` only. Tasks come later, from `/write-tasks`.
+This skill produces `SPEC.md`, then hands it straight to `/write-tasks` for the tasks.
 
 ## The design tree
 
@@ -104,6 +104,6 @@ Write `SPEC.md` to `$PWD/specs/{slug}/`, where `{slug}` is a short kebab-case na
 - Every requirement in plain language: the behavior, plus its acceptance criteria as a bullet list of observable outcomes.
 - Record the design, not the process: what changes where, and the decisions we agreed on.
 - Name every repository the change touches, when the checkout spans more than one.
-- Write it to be read cold: `/write-tasks` runs without the interview in context, so anything we agreed that shapes the work has to be on the page.
+- Write it to be read cold: `/implement` runs without the interview in context, so anything we agreed that shapes the work has to be on the page.
 
-Then stop and tell me to run `/write-tasks {slug}`.
+Then invoke the `write-tasks` skill via the Skill tool with `{slug}` as the argument — don't stop to ask me first.

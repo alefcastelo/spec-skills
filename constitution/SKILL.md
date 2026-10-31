@@ -1,10 +1,10 @@
 ---
 name: constitution
-description: Build or rebuild the project's constitution and tech stack in .ai/, then index the code with codegraph
+description: Build or rebuild the project's constitution and tech stack in .ai/
 effort: max
 ---
 
-Map this project's lasting decisions into `.ai/CONSTITUTION.md`, the technology that implements them into `.ai/TECHSTACK.md`, then index the code base with codegraph. Run it whenever the project needs it — every run revisits every definition: $ARGUMENTS
+Map this project's lasting decisions into `.ai/CONSTITUTION.md` and the technology that implements them into `.ai/TECHSTACK.md`. Run it whenever the project needs it — every run revisits every definition: $ARGUMENTS
 
 ## CONSTITUTION.md
 
@@ -60,10 +60,3 @@ TECHSTACK.md follows the same shape: `- **Framework:** {name} {version}`.
 - MUST: Show a decision the code contradicts as ✏️ or ➖. Never keep it silently.
 - MUST: Put the open questions in the same round — numbered, each with your recommended answer and its tradeoff.
 - MUST: Write only what I approved. A change I reject leaves the section as it was.
-
-## Codegraph
-
-- MUST: Run codegraph as the last step, after both files are written: `codegraph init -y` when the project has no `.codegraph/`, `codegraph sync` otherwise.
-- MUST: Make sure `.codegraph/` is in the project's `.gitignore` — the index is local to each machine.
-- MUST: Stop at this step and tell me when `codegraph` is not on the PATH.
-- DON'T: Install codegraph yourself.

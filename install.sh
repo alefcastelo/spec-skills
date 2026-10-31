@@ -4,7 +4,7 @@
 set -euo pipefail
 
 REPO="alefcastelo/spec-skills"
-SKILLS=(specify write-tasks implement archive plan validate review never-again learning research)
+SKILLS=(specify write-tasks implement archive plan validate review never-again learning research constitution)
 DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 
 tmp="$(mktemp -d)"

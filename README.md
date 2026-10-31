@@ -7,7 +7,7 @@ Spec-driven skills for Claude Code, synced across machines. Source of truth for 
 | Skill | Role |
 |---|---|
 | `/research` | Collaborative external research: validate hypotheses against sources, devil's advocate, living document in `docs/research/{slug}.md` that feeds a PRD/spec |
-| `/explore` | Explore a feature as a PM and an architect would, settling its product and technical direction in `.ai/{date}-{slug}/EXPLORE.md` before `/specify` details it |
+| `/explore` | Explore a feature as a PM and an architect would, settling its product and technical direction in `.ai/{date}-{slug}/EXPLORE.md` |
 | `/specify` | Full feature: interview until shared understanding, produce `specs/{slug}/SPEC.md` |
 | `/write-tasks` | Break an agreed spec into slices/tasks → `TASK.md` |
 | `/plan` | Light sibling of `/specify` for refactorings, fixes, simple changes → a single `PLAN.md` (standalone or nested in a spec); also turns PR review comments into a correction plan |

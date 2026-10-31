@@ -10,9 +10,16 @@ The decisions are mine. You bring the facts, the alternatives, and a recommendat
 
 ## Depth
 
-Direction, not design. "Use an ORM" is direction; which ORM when any would do, its tradeoffs, the migration library it may need — that is detail, and detail belongs to `/specify`.
+Direction, not design. A choice is direction when reversing it later rewrites the feature or changes what the user experiences; it is detail when it can be swapped behind that choice. Detail belongs to `/specify`.
 
-- MUST: Ask only what changes the direction. Name a technology only when the choice itself sets it — TanStack or HTMX, opaque tokens or JWT.
+| Direction — settle it here | Detail — leave it |
+|---|---|
+| Server-rendered with HTMX, or an SPA with TanStack — decides where state lives and who owns the UI | Router, component kit, how a form posts |
+| Opaque tokens checked server-side, or self-contained JWTs — decides whether logout and revocation are instant | Token lifetime, refresh flow, claims, where it's stored |
+| Relational behind an ORM, or a document store — decides how the data is modeled and queried | Which ORM, its migrations, the schema |
+| Answer on request, or a background job that notifies — decides what the user waits for | Queue library, retry policy, payload |
+
+- MUST: Ask only what changes the direction. Name a technology only when the choice itself sets it.
 - DON'T: Go past direction into contracts, data shapes, configuration or tasks.
 
 ## Topics

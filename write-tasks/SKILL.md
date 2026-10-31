@@ -6,7 +6,7 @@ effort: max
 
 You will read the agreed spec and break it into slices, each slice into tasks, writing them to `TASK.md`: $ARGUMENTS
 
-$ARGUMENTS is the slug or path of a spec under `$PWD/specs/`. If it's missing or matches more than one, ask me which — don't pick for me.
+$ARGUMENTS is the slug or path of a spec under `$PWD/.ai/`. If it's missing or matches more than one, ask me which — don't pick for me.
 
 The spec is settled. This command turns it into a track; it doesn't reopen the design.
 
@@ -56,7 +56,7 @@ Task body:
 
 ## Output
 
-Write `TASK.md` next to the spec, in `$PWD/specs/{slug}/`.
+Write `TASK.md` next to the spec, in its `$PWD/.ai/<Y-m-d>-<slug>/` folder.
 
 `TASK.md` — the local track, live source of truth. It opens with a status line, then one section per slice, its tasks under it:
 
@@ -76,4 +76,4 @@ Status: 🔍 ready to implement
 - A slice is shippable when every task under it is `- [x] ✅` — it carries no checkbox of its own.
 - No **Open** section. `/implement` reserves it for blockers found while implementing; nothing is parked there in advance.
 
-Then tell me the track is ready for `/implement`, listing anything I decided during this run that the spec didn't already say.
+Then list anything I decided during this run that the spec didn't already say, and invoke the `validate` skill via the Skill tool with `{slug}` — don't stop to ask me first.

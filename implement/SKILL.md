@@ -10,9 +10,9 @@ Implement the tasks for this spec or plan, or pick the next track when none is g
 
 A track is a `TASK.md` or a `PLAN.md` — same checkbox, blocked-by and commit format, same rules below.
 
-- If $ARGUMENTS names a track — a spec (its dir, `SPEC.md`, `TASK.md`), a plan (standalone `specs/{slug}/PLAN.md` or nested `specs/{spec-slug}/plans/{plan-slug}/PLAN.md`, or its dir), or a task that belongs to one — implement **all** of its tasks.
+- If $ARGUMENTS names a track — a spec (its dir, `SPEC.md`, `TASK.md`), a plan (standalone `.ai/<Y-m-d>-<slug>/PLAN.md` or nested `.ai/<Y-m-d>-<spec-slug>/plans/<plan-slug>/PLAN.md`, or its dir), or a task that belongs to one — implement **all** of its tasks.
 - If $ARGUMENTS names a single task with no spec, implement just that one.
-- Otherwise read the `TASK.md` and `PLAN.md` files under `specs/` — nested `plans/` included — and pick the track whose tasks have all their blockers done.
+- Otherwise read the `TASK.md` and `PLAN.md` files under `.ai/` — nested `plans/` included, `.ai/archive/` skipped — and pick the track whose tasks have all their blockers done.
 
 ## Autonomy
 

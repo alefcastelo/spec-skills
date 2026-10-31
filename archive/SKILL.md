@@ -14,15 +14,14 @@ Archive the spec directory (`SPEC.md` + `TASK.md`), or a standalone plan directo
 
 ## Archive
 
-- Resolve today's date as `YYYY-MM-DD` (run `date +%F`).
-- Move the whole directory to `$PWD/specs/archive/{date}-{slug}/` with `mv`, so archives sort chronologically. `SPEC.md`, `TASK.md` or `PLAN.md`, and the whole `plans/` directory move with it.
+- Move the whole folder to `$PWD/.ai/archive/` with `mv`, keeping its name `<Y-m-d>-<slug>` — the date stays the creation date, so archives sort by when the work started. `EXPLORE.md`, `SPEC.md`, `TASK.md` or `PLAN.md`, and the whole `plans/` directory move with it.
 - A nested plan NEVER archives on its own. It archives when the spec that owns it does, inside that move.
 - Never delete — archiving is a move, always reversible by moving it back.
-- If `specs/archive/{date}-{slug}/` already exists, stop and ask rather than overwriting.
+- If `.ai/archive/<Y-m-d>-<slug>/` already exists, stop and ask rather than overwriting.
 
 ## Summary
 
-For a spec or plan, write `$PWD/specs/archive/{date}-{slug}/summary.md`:
+For a spec or plan, write `$PWD/.ai/archive/<Y-m-d>-<slug>/summary.md`:
 
 - One line per requirement (`R1`, `R2`, …) from `SPEC.md`: what shipped, in plain language.
 - The tasks (`T-N`) that delivered it, with their commit references from `TASK.md`.

@@ -14,7 +14,7 @@ You review and comment. You never push a fix.
 
 - MUST: Resolve the PR before reading anything — `gh pr view $ARGUMENTS --json number,title,body,headRefName,baseRefName,headRefOid,files,url`. With no argument, `gh pr view --json ...` resolves the current branch's PR.
 - MUST: Stop and say so when no PR resolves — never review a bare diff and pretend it is a PR.
-- MUST: Find the `SPEC.md` or `PLAN.md` that owns the PR, under `specs/`. Look at the branch name, the PR title and body, and the task lines (`T-N`) they reference. That document is the agreed scope — without it you cannot judge missing or extra implementation.
+- MUST: Find the `SPEC.md` or `PLAN.md` that owns the PR, under `.ai/`. Look at the branch name, the PR title and body, and the task lines (`T-N`) they reference. That document is the agreed scope — without it you cannot judge missing or extra implementation.
 
 ## Read
 

@@ -97,7 +97,7 @@ The spec is finished only when nothing is open. There is no **Open** section, no
 
 ## Output
 
-Write `SPEC.md` to `$PWD/specs/{slug}/`, where `{slug}` is a short kebab-case name derived from $ARGUMENTS.
+Write `SPEC.md` to `$PWD/.ai/<Y-m-d>-<slug>/`, where `<Y-m-d>` comes from `date +%F` and `<slug>` is a short kebab-case name derived from $ARGUMENTS. When a `.ai/*-<slug>/` folder already exists — `/explore` may have started it — write into it; the folder keeps its date.
 
 - The file opens with `Status: 🔍 specified` right under the title — the 🔍 marks design-phase artifacts; lifecycle from there lives in the track (`/write-tasks`, `/implement`).
 - One section per requirement, containing BOTH its requirement (`R1`, `R2`, …) AND its technical design.

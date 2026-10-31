@@ -22,15 +22,6 @@ Archive the spec directory (`SPEC.md` + `TASK.md`), a standalone plan directory 
 - Never delete — archiving is a move, always reversible by moving it back.
 - If `specs/archive/{date}-{slug}/` already exists, stop and ask rather than overwriting.
 
-## Learnings — mandatory
-
-The archive does not conclude without this step.
-
-- MUST: Extract the learning candidates from this execution — decisions taken, mistakes corrected, course changes recorded in the track's history, **Open** notes and the summary. For a research document: refuted hypotheses, source conflicts, and anything the research settled that future work must not re-litigate.
-- MUST: Run the `/learning` flow on every candidate. Each one is stored only with the user's explicit approval, per that skill's rules — `/learning` owns the how.
-- MUST: Accept "no learning from this execution" as a valid outcome — but only after asking, with the user confirming it.
-- DON'T: Store anything directly from here. `/learning` is the only gate to `docs/learnings/`.
-
 ## Summary
 
 A research document needs no summary — its sections already are the summary. For a spec or plan, write `$PWD/specs/archive/{date}-{slug}/summary.md`:

@@ -15,7 +15,6 @@ This is the light sibling of `/specify`. Use it when thinking the whole feature 
 - MUST: Dispatch sub-agents for the exploration and keep the main context clean — one focused question per agent, findings back, not file dumps.
 - MUST: Investigate before proposing anything new — reuse the existing use cases, entities and components first.
 - MUST: Check my premises against the code. When what I say and what the code says disagree, tell me what the code actually does before we plan on top of it.
-- MUST: Read the learnings — the project's `docs/learnings/INDEX.md`, when it exists — and open `{slug}/{slug}.md` for the ones that touch this change. A learning that applies is a constraint on the plan, not a suggestion.
 - MUST: Ask only what only I can answer — product intent or an architectural call. Everything else you find yourself.
 
 ## Adaptive depth
@@ -25,7 +24,7 @@ The interview is as long as the change deserves, and no longer.
 - MUST: Propose the `PLAN.md` directly and ask for a single OK when the investigation leaves no real product or architectural decision open — zero rounds of questions.
 - MUST: Ask before writing when something is ambiguous, or when the investigation turns up something that doesn't conform — a premise that's wrong, an antipattern in the path of the change, two callers that disagree.
 - MUST: Use the round protocol from `/specify` when you do ask: the whole frontier in one round, numbered questions, recomputed after every answer, until nothing is open.
-- MUST: Classify every question by impact, same scale as `/specify`: 🚨 `[high impact]` (expensive to reverse — contract, architecture, scope), ⚠️ `[moderate impact]` (changes behavior, reversible), `[low impact]` (follows the flow, no emoji). Applies in text rounds and AskUserQuestion alike.
+- MUST: Classify every question by impact, same scale as `/specify`: 🚨 `[high impact]` (expensive to reverse — contract, architecture, scope), ⚠️ `[moderate impact]` (changes behavior, reversible), `[low impact]` (small, but ambiguous or without ground in the code — you couldn't decide it yourself; no emoji). Applies in text rounds and AskUserQuestion alike.
 - MUST: Give every question your recommended answer and its tradeoff. A question without a recommendation is work pushed back to me.
 - MUST: Record every settled decision with a 🤝 prefix — in the round recap and in the plan's decision notes.
 
@@ -46,7 +45,7 @@ Invariants — they hold at every moment of the session.
 
 - MUST: Prefer the correct solution even when it adds work, over the one that solves the problem while keeping consistency, over the hacky fix that solves it but has the potential to create another problem. That order, always.
 - MUST: Never fill a gap with an assumption. A gap is a question — for the code first, for me when the code can't know.
-- MUST: The decisions are mine. Put each one to me, with your recommendation.
+- MUST: Decide what the decision rule from `/specify` allows and report it in the **🤖 Decided by me** block. Put every other decision to me, with your recommendation.
 - MUST: Settle everything before writing `PLAN.md`. It ships with no **Open** section and no "we'll decide during implementation" — a question parked here comes back as an interruption in the middle of `/implement`.
 - MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad names. Never ignore them (boy scout rule), and never fold them into the central change: each becomes a **side plan** — its own plan, shipped as its own PR — and the stack is presented to me in merge order. `/implement` treats a side plan as an extra delivery, never part of the main PR.
 - SHOULD: Show a short code example when a contract, a data shape or two competing implementations are easier to show than to say.

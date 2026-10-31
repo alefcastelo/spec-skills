@@ -27,7 +27,7 @@ Number each question, classify its impact, and give your recommended answer:
 
 - 🚨 `[high impact]` — expensive to reverse: changes a contract, the architecture, or the scope. Urgency signal; I review these carefully before approving.
 - ⚠️ `[moderate impact]` — changes behavior, but reversible. An alert.
-- `[low impact]` — follows the flow; no emoji.
+- `[low impact]` — small, but ambiguous or without ground in the code — you couldn't decide it yourself. No emoji.
 
 ```
 **Round 2**
@@ -50,6 +50,20 @@ Number each question, classify its impact, and give your recommended answer:
 - MUST: Classify every question — the classification applies wherever the question is delivered, text rounds and AskUserQuestion alike (put the emoji in the question text or header).
 - MUST: Record every settled decision with a 🤝 prefix — in the round recap and in the spec's decision bullets — so a closed decision is visibly closed.
 
+## Deciding on my behalf
+
+Not every gap deserves my time. Decide it yourself — without asking — only when all of these hold:
+
+- **The general idea holds** — no requirement changes meaning.
+- **Reversing it costs nothing** — changing it later touches no data, no contract, no consumer.
+- **There is one clear answer** — the code, `.ai/CONSTITUTION.md` or the project's convention points to it; not two reasonable options.
+- **It isn't product intent** — it's not about what I want the product to do.
+- **It's outside the sensitive areas** — data consistency and integrity, PII and data exposure (returning more than needed), security and permissions, contracts others consume, irreversible data operations, money and billing. These are always asked, however small.
+
+- MUST: Ask when in doubt on any condition.
+- MUST: Close every round with a numbered **🤖 Decided by me** block — one line per decision and its reason — so I can overturn any by number.
+- MUST: Write the decision into the requirement it belongs to, like any other.
+
 ## Rules
 
 Invariants — they hold at every moment of the session.
@@ -58,9 +72,8 @@ Invariants — they hold at every moment of the session.
 - MUST: Finding facts is your job, never mine. When a frontier question needs a fact from the codebase or the environment, dispatch a sub-agent instead of asking me.
 - MUST: Read the code before every question. The code is the unique truth — if it answers the question, it is answered, and asking me is a bug. Ask only what the code cannot know: what I want the product to do.
 - MUST: Check my premises against the code too. I can be wrong about what's there. When what I say and what the code says disagree, tell me what the code actually does before we design on top of it.
-- MUST: The decisions are mine. Put each one to me.
+- MUST: The decisions the rule above doesn't cover are mine. Put each one to me.
 - MUST: Investigate the codebase before proposing anything new — reuse existing use cases, entities, and components first.
-- MUST: Consult the learnings at the start of the session — the project's `docs/learnings/INDEX.md`, when it exists — and read `{slug}/{slug}.md` for any entry you need more context on, so the design we agree on never repeats a mistake already recorded there.
 - MUST: Rank every solution the same way — correct (even if it adds more work) > solves the problem while keeping consistency > hacky solution that solves it but can create another problem. Prefer the first; never pick the last.
 - MUST: Give every requirement an ID (`R1`, `R2`, …) — that's what the tasks will reference.
 - SHOULD: Use my vocabulary from `@<path-to-your-md-files>` so the spec sounds like me.
@@ -78,7 +91,7 @@ Invariants — they hold at every moment of the session.
 The spec is finished only when nothing is open. There is no **Open** section, no "to be decided", no "we'll settle this during implementation".
 
 - MUST: Settle every question before writing `SPEC.md` — the minor ones too. A question parked here comes back as an interruption in the middle of `/implement`, which is exactly what this skill exists to prevent.
-- MUST: Answer it from the code when the code can answer it, and put it to me when only I can. Those are the only two outcomes.
+- MUST: Answer it from the code when the code can answer it, decide it yourself when **Deciding on my behalf** allows it (🤖), and put it to me when only I can. Those are the only three outcomes.
 - MUST: Write the settled answer into the requirement it belongs to, so `/write-tasks` and `/implement` read it without asking again.
 - MUST: Say so plainly and keep the frontier open if I stop answering — an unanswered question means the spec isn't done, not that it can ship with a hole.
 

@@ -54,4 +54,4 @@ Each session is one loop, repeated as long as I keep bringing questions:
 
 ## Done
 
-A research document never "finishes" inside this skill — it stays `🔬 active` until it has fed its PRD or spec, or I declare it closed. `/archive` moves it to `docs/research/archive/` and extracts learnings, when there are any.
+A research document never "finishes" inside this skill — it stays `🔬 active` until it has fed its PRD or spec, or I declare it closed. `/archive` moves it to `docs/research/archive/`.

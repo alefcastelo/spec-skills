@@ -23,14 +23,6 @@ You review and comment. You never push a fix.
 - MUST: Open every file the diff touches at its current state, plus the code that calls it and the code it calls.
 - MUST: Look for the existing thing before flagging a duplicate, and for the existing abstraction before proposing a new one — dispatch sub-agents to search, keeping your own context clean.
 
-## Delegated checks
-
-- MUST: Invoke the `never-again` skill via the Skill tool — it runs as a forked sub-agent. Pass the PR number as the argument: a fork inherits nothing, so the argument is the whole handoff.
-- MUST: Wait for its result before composing any comment.
-- MUST: Fold its findings into the `learning` axis.
-- MUST: Re-anchor every delegated finding to the patch hunks, and discard any that cannot anchor to a diff line.
-- MUST: Count delegated findings toward the verdict exactly like your own findings.
-
 ## Axes
 
 Every finding belongs to exactly one axis, and every comment names its axis.
@@ -40,7 +32,6 @@ Every finding belongs to exactly one axis, and every comment names its axis.
 3. **extra** — implemented beyond the agreed scope: code the SPEC/PLAN never asked for, speculative generality, an unused flag, an unrelated refactor riding along.
 4. **missing** — the SPEC/PLAN asks for it and the PR does not deliver it. Cite the requirement (`R<n>`) or task (`T-<n>`).
 5. **reuse** — *look hardest here.* Logic that is correct but locked where nobody else can use it: business rule inlined in a controller/handler/component, a copy of something that already exists, a private helper that belongs in the domain, a rule that cannot be tested without booting the framework, a shape hard-coded instead of derived. Say where it belongs and who else would call it.
-6. **learning** — repeats a mistake already recorded in the learnings. Fed by `never-again`'s findings. Link the learning doc.
 
 ## Comments
 

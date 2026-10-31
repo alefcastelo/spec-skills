@@ -4,7 +4,7 @@ description: Validate a SPEC.md or PLAN.md against gaps and code inconsistencies
 effort: max
 ---
 
-You will read an agreed `SPEC.md` or `PLAN.md`, hunt for what it gets wrong or leaves out, put every finding to me, and fold the approved corrections back into that same document: $ARGUMENTS
+You will read an agreed `SPEC.md` or `PLAN.md`, hunt for what it gets wrong or leaves out, settle what the decision rule from `/specify` lets you settle, put every other finding to me, and fold the corrections back into that same document: $ARGUMENTS
 
 $ARGUMENTS is the slug or path of a spec or plan under `$PWD/specs/`. If it's missing or matches more than one, ask me which — don't pick for me.
 
@@ -68,19 +68,19 @@ The **frontier** is every finding I can decide now — the ones whose answer doe
 
 ## Rules
 
-- MUST: Reach an explicit outcome on every finding — corrected, dismissed by me, or deferred by me with the reason written into the doc. Those are the only three.
+- MUST: Reach an explicit outcome on every finding — corrected, decided by you (🤖), dismissed by me, or deferred by me with the reason written into the doc. Those are the only four.
 - MUST: Ask me when the code can't answer, and answer from the code when it can. Never fill a gap with an assumption.
 - MUST: Tell me when I'm wrong about what's in the code, before we design on top of it.
 - MUST: Rank every proposed fix the same way — correct (even if it adds more work) > solves the problem while keeping consistency > hacky solution that solves it but can create another problem. Prefer the first; never pick the last.
 - MUST: Stop and say so if the document is unworkable at its core. A doc that needs a redesign goes back to `/specify` or `/plan`, not through a patch here.
 - DON'T: Drop a finding silently. If I don't answer it, it's still open — say so.
-- DON'T: Apply a correction silently. Nothing changes in the document without my approval, not even a minor.
+- MUST: Apply a correction yourself only when the decision rule from `/specify` allows it, and list it in a **🤖 Decided by me** block. Every other correction needs my approval.
 - DON'T: Invent scope. A finding is a gap in what we agreed, never a feature you'd like to add.
 - DON'T: Write code, run a migration, or start any task. This skill validates a document.
 
 ## Output
 
-Apply the approved corrections directly to the same `SPEC.md` / `PLAN.md`. The validated document is the single source of truth.
+Apply the corrections — approved by me or decided by you (🤖) — directly to the same `SPEC.md` / `PLAN.md`. The validated document is the single source of truth.
 
 - MUST: Edit in place — the corrected doc reads as if it had always been right, with no "validation note", changelog, or diff commentary in it.
 - MUST: Fold each correction into the requirement, design, or task it belongs to, so `/write-tasks` and `/implement` read it cold without this session in context.
@@ -88,4 +88,4 @@ Apply the approved corrections directly to the same `SPEC.md` / `PLAN.md`. The v
 - MUST: Keep the doc closed: no **Open** section, nothing "to be decided during implementation".
 - DON'T: Create any other file. No `VALIDATION.md`, no report, no findings file — the numbered list lives in this conversation only.
 
-Then tell me, in one message: which findings were corrected, which I dismissed, and which are still open.
+Then tell me, in one message: which findings were corrected, which you decided yourself (🤖), which I dismissed, and which are still open.

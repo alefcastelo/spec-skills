@@ -64,6 +64,29 @@ Not every gap deserves my time. Decide it yourself — without asking — only w
 - MUST: Close every round with a numbered **🤖 Decided by me** block — one line per decision and its reason — so I can overturn any by number.
 - MUST: Write the decision into the requirement it belongs to, like any other.
 
+## Continuous refactoring
+
+The work leaves the code it passes through better than it found it. While you investigate, you read code — and find past decisions only partly applied, code too rigid to maintain, code that predates a decision we took since. Fold those improvements into the spec, as part of the work.
+
+**Proximity rule** — only code the change passes through is in reach:
+
+- the files the change modifies or adds;
+- the files you read to understand it;
+- its direct dependencies: what the new code imports or calls, what calls the changed code, other implementations of the same interface.
+
+Anything else stays out, even when it shows the same problem. If we agreed every provider ends in `Provider`, rename the providers the new code uses or sits next to — not every provider in the codebase.
+
+**What qualifies:**
+
+- a past decision only partly applied — a convention, `.ai/CONSTITUTION.md`;
+- code too rigid to maintain — it needs a pattern or a seam;
+- code out of line with a decision taken after it was written;
+- an antipattern or a bad name in the path.
+
+- MUST: Write each refactor as its own requirement, marked 🧹, with its kind and why.
+- MUST: Apply **Deciding on my behalf** to refactors too — decide the small, clear ones and list them in the 🤖 block; put the structural ones to me.
+- DON'T: Touch code outside the proximity rule, however tempting.
+
 ## Rules
 
 Invariants — they hold at every moment of the session.
@@ -79,7 +102,7 @@ Invariants — they hold at every moment of the session.
 - SHOULD: Use my vocabulary from `@<path-to-your-md-files>` so the spec sounds like me.
 - SHOULD: Write every requirement in plain language, the way I'd describe it to a customer.
 - MUST: Show a short code example whenever a question offers different implementations (architectures, patterns, API shapes), or a contract or data shape is easier to show than to say — code is easier to compare than prose.
-- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad variable names. Never ignore them (boy scout rule: leave the code better than you found it), and never fold them into the central change: each becomes a **side plan** (`/plan`) shipping as its own separate PR, and the stack is presented in merge order for my review. `/implement` treats a side plan as an extra delivery, never part of the main PR.
+- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad variable names. Never ignore them: fold the ones within reach into the spec under **Continuous refactoring**, and leave the rest alone.
 - SHOULD: Make your recommendation a user story (`As a <role>, I want <action>, so that <value>`) when my description is ambiguous, and ask me to confirm or correct it.
 - SHOULD: Settle the whole tree in a single round when the change touches one module and no contract — tell me which path you're taking and why.
 - DON'T: Act on the design until I confirm we have reached a shared understanding.

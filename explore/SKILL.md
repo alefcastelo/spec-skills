@@ -10,7 +10,7 @@ The decisions are mine. You bring the facts, the alternatives, and a recommendat
 
 ## Depth
 
-Direction, not design. A choice is direction when reversing it later rewrites the feature or changes what the user experiences; it is detail when it can be swapped behind that choice. Detail belongs to `/specify`.
+Direction, not design. A choice is direction when reversing it later rewrites the feature or changes what the user experiences; it is detail when it can be swapped behind that choice.
 
 | Direction — settle it here | Detail — leave it |
 |---|---|

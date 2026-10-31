@@ -1,6 +1,6 @@
 ---
 name: validate
-description: Validate a spec (SPEC.md + TASK.md) or a PLAN.md with four isolated sub-agents before implementation
+description: Validate a spec (SPEC.md + TASK.md) or a PLAN.md with five isolated sub-agents before implementation
 effort: max
 ---
 
@@ -12,16 +12,17 @@ $ARGUMENTS is the slug or path of a spec or plan under `$PWD/.ai/`. If it's miss
 
 ## What to check
 
-You validate nothing yourself. Four sub-agents do, one per axis, each starting from nothing but the documents and the code:
+You validate nothing yourself. Five sub-agents do, one per axis, each starting from nothing but the documents and the code:
 
 - **Inconsistencies** — the doc against the code (it says the code works one way and it works another — the code is the unique truth), the spec against its tasks, and the doc against itself: two requirements that can't both hold, a task that contradicts the design it traces to, a slice that depends on a later one, acceptance criteria no task satisfies, a task tracing to no requirement.
 - **Gaps** — what the spec or the tasks leave out: edge cases, permissions, empty and error states, concurrency, what happens to existing data, contracts and data shapes, and reuse the doc ignored — an existing use case, entity, endpoint or component that already does what it proposes to build.
 - **Unmapped changes** — what has to change for this to work but isn't planned: callers of the code being changed, tests, migrations, docs, configuration, other repositories.
 - **Implementability** — whether every task can run to the end without a question or an interruption: an undecided choice, a missing value, an acceptance criterion nobody can check, anything that would make `/implement` stop and ask.
+- **Continuous refactoring** — improvements within reach, per **Continuous refactoring** in `/specify`: a past decision only partly applied, code too rigid to maintain, code out of line with a later decision, an antipattern or a bad name in the path. Each one comes with its kind and where it should ship: a PR before the main one, a PR after, or an own commit inside it.
 
 Rules:
 
-- MUST: Dispatch the four sub-agents in a single message, each with no context — only the document paths and its axis. No conversation, no summary, no hint of the answer you expect.
+- MUST: Dispatch the five sub-agents in a single message, each with no context — only the document paths and its axis. No conversation, no summary, no hint of the answer you expect.
 - MUST: Validate nothing yourself. You consolidate, ask and correct; the sub-agents find.
 - MUST: Discard a finding a sub-agent can't back with a `file:line` or a doc line. An unverified suspicion is noise, not a finding.
 - MUST: When two sub-agents disagree, give both claims to a fresh isolated sub-agent and take its verdict from the code.
@@ -29,7 +30,7 @@ Rules:
 
 ## Findings
 
-Merge the four reports into one numbered list — duplicates folded together — before touching any document.
+Merge the five reports into one numbered list — duplicates folded together — before touching any document.
 
 - MUST: Number every finding, and keep the number stable for the whole session — I'll answer by number.
 - MUST: Give every finding a severity: **blocker** (can't be implemented as written), **important** (implementable, but ships wrong or incomplete behavior), **minor** (worth fixing, cheap to fix).
@@ -76,7 +77,7 @@ The **frontier** is every finding I can decide now — the ones whose answer doe
 - MUST: Stop and say so if the document is unworkable at its core. A doc that needs a redesign goes back to `/specify` or `/plan`, not through a patch here.
 - DON'T: Drop a finding silently. If I don't answer it, it's still open — say so.
 - MUST: Apply a correction yourself only when the decision rule from `/specify` allows it, and list it in a **🤖 Decided by me** block. Every other correction needs my approval.
-- DON'T: Invent scope. A finding is a gap in what we agreed, never a feature you'd like to add.
+- DON'T: Invent scope. A finding is a gap in what we agreed, never a feature you'd like to add. A refactor within the proximity rule from `/specify` is not invented scope.
 - DON'T: Write code, run a migration, or start any task. This skill validates documents.
 
 ## Output

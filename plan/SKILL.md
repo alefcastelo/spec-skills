@@ -22,7 +22,7 @@ This is the light sibling of `/specify`. Use it when thinking the whole feature 
 The interview is as long as the change deserves, and no longer.
 
 - MUST: Propose the `PLAN.md` directly and ask for a single OK when the investigation leaves no real product or architectural decision open — zero rounds of questions.
-- MUST: Ask before writing when something is ambiguous, or when the investigation turns up something that doesn't conform — a premise that's wrong, an antipattern in the path of the change, two callers that disagree.
+- MUST: Ask before writing when something is ambiguous, or when the investigation turns up something that doesn't conform — a premise that's wrong, an antipattern in the path of the change that the decision rule doesn't let you settle, two callers that disagree.
 - MUST: Use the round protocol from `/specify` when you do ask: the whole frontier in one round, numbered questions, recomputed after every answer, until nothing is open.
 - MUST: Classify every question by impact, same scale as `/specify`: 🚨 `[high impact]` (expensive to reverse — contract, architecture, scope), ⚠️ `[moderate impact]` (changes behavior, reversible), `[low impact]` (small, but ambiguous or without ground in the code — you couldn't decide it yourself; no emoji). Applies in text rounds and AskUserQuestion alike.
 - MUST: Give every question your recommended answer and its tradeoff. A question without a recommendation is work pushed back to me.
@@ -47,7 +47,7 @@ Invariants — they hold at every moment of the session.
 - MUST: Never fill a gap with an assumption. A gap is a question — for the code first, for me when the code can't know.
 - MUST: Decide what the decision rule from `/specify` allows and report it in the **🤖 Decided by me** block. Put every other decision to me, with your recommendation.
 - MUST: Settle everything before writing `PLAN.md`. It ships with no **Open** section and no "we'll decide during implementation" — a question parked here comes back as an interruption in the middle of `/implement`.
-- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad names. Never ignore them (boy scout rule), and never fold them into the central change: each becomes a **side plan** — its own plan, shipped as its own PR — and the stack is presented to me in merge order. `/implement` treats a side plan as an extra delivery, never part of the main PR.
+- MUST: Surface what the investigation turns up beyond the original ask — gaps, antipatterns, messy logic, bad names. Never ignore them: fold the ones within reach into the plan as 🧹 requirements, per **Continuous refactoring** in `/specify`, and leave the rest alone.
 - SHOULD: Show a short code example when a contract, a data shape or two competing implementations are easier to show than to say.
 - DON'T: Design the product. If the change turns out to need a real WHAT — new behavior, new experience, decisions a customer would notice — stop and tell me to run `/specify` instead.
 - DON'T: Start implementing. This skill produces `PLAN.md` only.
@@ -78,20 +78,23 @@ The file carries three things, in this order:
 
 1. **Context** — the minimum needed to understand why the change exists: what's wrong today, what it should be, what the investigation found. Written to be read cold, because `/implement` runs without this conversation in context.
 2. **Requirements** — lite. One short section per requirement with an ID (`R1`, `R2`, …) and its acceptance criteria as observable outcomes. No experience design, no user stories unless the change actually has a user-facing behavior.
-3. **Tasks** — grouped in waves or slices, in the same track format as `TASK.md`:
+3. **Tasks** — grouped under `## PR N` headings and `### S` slices, in the same track format and with the same PR placement rules as `/write-tasks`:
 
 ```
-## S1 — Retry policy lives in one place
+## PR 1 — Retry policy lives in one place
+
+### S1 — HttpClient owns the retry
 
 - [ ] T-1 — Remove the job-level retry and route it through HttpClient — repo: api — commit: —
 - [ ] T-2 — Cover the backoff window with a test at the client boundary — repo: api — blocked by: T-1 — commit: —
+- [ ] T-3 — 🧹 Rename HttpClient's retry options to the RetryPolicy names — repo: api — own commit — commit: —
 ```
 
-- MUST: One checkbox line per task: `- [ ] T-N — title — repo: <repo> — blocked by: T-M — commit: —`. No status emoji at creation — `/implement` adds them as it runs (🚀 started, `- [x] ✅` done with the commit reference, ✋ waiting on the user).
+- MUST: One checkbox line per task: `- [ ] T-N — title — repo: <repo> — blocked by: T-M — own commit — commit: —`. No status emoji at creation — `/implement` adds them as it runs (🚀 started, `- [x] ✅` done with the commit reference, ✋ waiting on the user).
 - MUST: Give every task acceptance criteria in observable terms, and trace it to a requirement ID.
 - MUST: Number tasks in dependency order, so a blocker's number always precedes its dependents.
 - MUST: Leave `blocked by` off every task that depends on no one — that's what marks it parallelizable.
-- MUST: Group the tasks into waves or slices that each ship on their own, and order them so a group depends only on earlier ones.
+- MUST: Group the tasks into slices that each ship on their own, and the slices into PRs mergeable in order — a 🧹 refactor goes in a PR before, a PR after, or as an `own commit` inside the main PR. A group depends only on earlier ones.
 - DON'T: Write a `TASK.md`. The `PLAN.md` is the track.
 
 Then stop and tell me to run `/implement {slug}`.

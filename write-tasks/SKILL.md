@@ -8,7 +8,7 @@ You will read the agreed spec and break it into slices, each slice into tasks, w
 
 $ARGUMENTS is the slug or path of a spec under `$PWD/.ai/`. If it's missing or matches more than one, ask me which — don't pick for me.
 
-The spec is settled. This command turns it into a track; it doesn't reopen the design.
+The spec is settled. This command turns it into a track; it doesn't reopen the design — adding a 🧹 refactor within reach is not reopening it.
 
 ## Slices
 
@@ -27,6 +27,19 @@ Rules:
 - MUST: Keep a change in the same slice as the changes that can't ship without it. A migration whose code isn't written yet, or a UI that reads a column nobody writes, belongs with its other half.
 - DON'T: Split a slice because it's big. Split it when each half ships on its own.
 - DON'T: Group by layer. "All the migrations", then "all the endpoints", is a horizontal slice — neither half ships.
+
+## PRs
+
+Slices ship in PRs. A track is one PR or a stack of them, merged in order — decided by judgement, never by size.
+
+- MUST: Group the slices under `## PR N — title` headings, in merge order. Every track has at least one.
+- MUST: Make every PR mergeable in order — the product works with it merged and nothing after it.
+- MUST: Place each 🧹 refactor from the spec by what it does to the main change:
+  - **a PR before** the main one, when the feature builds on it;
+  - **a PR after**, when it is cleanup that would only add noise to the main diff;
+  - **an own commit inside the main PR**, when it is small and touches the same lines — mark its task `own commit`.
+- MUST: Apply **Continuous refactoring** from `/specify` to the code you read while slicing — a refactor within reach that the spec lacks goes into the spec as a 🧹 requirement, decided per the decision rule, and into a PR like any other.
+- DON'T: Split PRs by size. Split them when each one makes sense to review and merge on its own.
 
 ## Tasks
 
@@ -58,22 +71,32 @@ Task body:
 
 Write `TASK.md` next to the spec, in its `$PWD/.ai/<Y-m-d>-<slug>/` folder.
 
-`TASK.md` — the local track, live source of truth. It opens with a status line, then one section per slice, its tasks under it:
+`TASK.md` — the local track, live source of truth. It opens with a status line, then one `## PR` section per PR in merge order, its `### S` slices under it, each slice's tasks under the slice:
 
 ```
 # TASK — {slug}
 
 Status: 🔍 ready to implement
 
-## S1 — Contact e-mails become one-to-many
+## PR 1 — 🧹 Contacts validate through the shared EmailAddress
 
-- [ ] T-1 — Add contact_emails table and migration — repo: api — commit: —
-- [ ] T-2 — Move the existing contact e-mail into the new table — repo: api — blocked by: T-1 — commit: —
+### S1 — The contact form uses EmailAddress
+
+- [ ] T-1 — 🧹 Replace the inline regex in ContactForm with EmailAddress — repo: api — commit: —
+
+## PR 2 — Contact e-mails become one-to-many
+
+### S2 — Contacts keep many e-mails
+
+- [ ] T-2 — Add contact_emails table and migration — repo: api — blocked by: T-1 — commit: —
+- [ ] T-3 — Move the existing contact e-mail into the new table — repo: api — blocked by: T-2 — commit: —
+- [ ] T-4 — 🧹 Rename ContactRepo to ContactRepository — repo: api — own commit — commit: —
 ```
 
-- One checkbox line per task: `- [ ] T-N — title — repo: <repo> — blocked by: T-M — commit: —` — no status emoji at creation; the task hasn't started.
+- One checkbox line per task: `- [ ] T-N — title — repo: <repo> — blocked by: T-M — own commit — commit: —` — `blocked by` only when it depends on another task, `own commit` only for a 🧹 refactor committed alone inside its PR; no status emoji at creation, the task hasn't started.
 - Status emojis are written by `/implement` as it runs: 🚀 task started, `- [x] ✅` task done (with the commit reference filled), ✋ task waiting on the user. The `Status:` line moves `🔍 ready to implement` → `🚀 implementing` → `✅ complete` (or `✋ blocked`).
 - A slice is shippable when every task under it is `- [x] ✅` — it carries no checkbox of its own.
+- A PR heading carries no checkbox either — it is done when all its slices are.
 - No **Open** section. `/implement` reserves it for blockers found while implementing; nothing is parked there in advance.
 
 Then list anything I decided during this run that the spec didn't already say, and invoke the `validate` skill via the Skill tool with `{slug}` — don't stop to ask me first.

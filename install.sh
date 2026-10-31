@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Installs/updates the spec-driven skills into ~/.claude/skills.
-# Replaces ONLY the skills listed below; every other directory is left untouched.
+# Replaces ONLY the skills in SKILLS and removes the retired ones in RETIRED;
+# every other directory is left untouched.
 set -euo pipefail
 
 REPO="alefcastelo/spec-skills"
-SKILLS=(specify write-tasks implement archive plan validate review never-again learning research constitution explore)
+SKILLS=(specify write-tasks implement archive plan validate review research constitution explore)
+RETIRED=(learning never-again)
 DEST="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 
 tmp="$(mktemp -d)"
@@ -24,6 +26,13 @@ for skill in "${SKILLS[@]}"; do
   rm -rf "${DEST:?}/$skill"
   cp -R "$tmp/src/$skill" "$DEST/$skill"
   echo "updated: $skill"
+done
+
+for name in "${RETIRED[@]}"; do
+  if [ -e "$DEST/$name" ]; then
+    rm -rf "${DEST:?}/$name"
+    echo "removed: $name"
+  fi
 done
 
 echo "Done. Skills installed to $DEST — other directories untouched."

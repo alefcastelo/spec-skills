@@ -56,10 +56,14 @@ Invariants — they hold at every moment of the session.
 
 When $ARGUMENTS points at a reviewed PR:
 
-- MUST: Read the PR's review comments with `gh` — `gh pr view <n> --comments` plus the inline diff comments via `gh api` — taking both the `/review` comments and the human ones.
+- MUST: Gather both sources — the `/review` findings in this session, and the PR's comments with `gh` (`gh pr view <n> --comments` plus the inline diff comments via `gh api`).
 - MUST: Ask me for anything else I want folded in before writing, and include it.
-- MUST: Turn every comment into a task, or say explicitly why one is not being addressed. A comment silently dropped is a review that didn't happen.
+- MUST: Classify every finding and comment as valid or invalid under the decision rule from `/specify` — decide the obvious ones and list them in the 🤖 block, put the rest to me. Review goes both ways: a finding can be wrong, and the code can be right.
+- MUST: Turn every valid one into a task, traced to its finding number or comment.
+- MUST: Record every invalid one in a short **Not addressed** list in the plan's Context, with its justification — and hand me a ready reply for each invalid PR comment. I post it if I agree.
+- MUST: Account for every finding and comment — a task or a justification. One silently dropped is a review that didn't happen.
 - MUST: Nest the resulting plan inside the spec that owns the PR.
+- DON'T: Post, reply to, or resolve anything on the PR. No skill writes to the PR; I do.
 
 ## Output
 

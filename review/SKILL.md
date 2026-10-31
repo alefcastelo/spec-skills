@@ -1,90 +1,88 @@
 ---
 name: review
-description: Review a PR and post the findings as comments on the PR
+description: Review a PR against its spec and tasks with isolated sub-agents, and report the findings in the session
 effort: max
 ---
 
-Review this PR and post the findings as comments on it: $ARGUMENTS
+Review this PR against the spec and tasks it delivers, and report what you find here, in the session: $ARGUMENTS
 
 $ARGUMENTS is a PR number. When it is empty, resolve the PR of the current branch.
 
-You review and comment. You never push a fix.
+You review and report. You never touch the PR and never change code.
 
 ## Target
 
 - MUST: Resolve the PR before reading anything — `gh pr view $ARGUMENTS --json number,title,body,headRefName,baseRefName,headRefOid,files,url`. With no argument, `gh pr view --json ...` resolves the current branch's PR.
 - MUST: Stop and say so when no PR resolves — never review a bare diff and pretend it is a PR.
-- MUST: Find the `SPEC.md` or `PLAN.md` that owns the PR, under `.ai/`. Look at the branch name, the PR title and body, and the task lines (`T-N`) they reference. That document is the agreed scope — without it you cannot judge missing or extra implementation.
-
-## Read
-
-- MUST: Read the diff AND the current code around it. A diff hides its context: the caller that breaks, the sibling that already does this, the interface the new class was supposed to implement.
-- MUST: Get the diff with `gh pr diff <n> --patch` — you need the patch hunks and their line numbers to place inline comments.
-- MUST: Open every file the diff touches at its current state, plus the code that calls it and the code it calls.
-- MUST: Look for the existing thing before flagging a duplicate, and for the existing abstraction before proposing a new one — dispatch sub-agents to search, keeping your own context clean.
+- MUST: Find the documents that own the PR, under `.ai/`: `SPEC.md` + `TASK.md`, or `PLAN.md`. Look at the branch name, the PR title and body, and the task lines (`T-N`) they reference. They are the agreed scope — without them you cannot judge missing or extra implementation.
 
 ## Axes
 
-Every finding belongs to exactly one axis, and every comment names its axis.
+Every finding belongs to exactly one axis.
 
-1. **bug** — it breaks: wrong logic, unhandled null/error, race, off-by-one, broken caller, data loss, missing transaction, leaked resource, N+1.
-2. **gap** — implemented, but not all the way: edge case, empty state, permission, validation, error path, missing test for a stated criterion.
-3. **extra** — implemented beyond the agreed scope: code the SPEC/PLAN never asked for, speculative generality, an unused flag, an unrelated refactor riding along.
-4. **missing** — the SPEC/PLAN asks for it and the PR does not deliver it. Cite the requirement (`R<n>`) or task (`T-<n>`).
-5. **reuse** — *look hardest here.* Logic that is correct but locked where nobody else can use it: business rule inlined in a controller/handler/component, a copy of something that already exists, a private helper that belongs in the domain, a rule that cannot be tested without booting the framework, a shape hard-coded instead of derived. Say where it belongs and who else would call it.
+1. **bug** — it breaks what the PR intends: wrong logic, unhandled null/error, race, off-by-one, data loss, missing transaction, leaked resource, N+1.
+2. **side-effect** — behavior that changed outside the intended scope: a caller or consumer relying on the old behavior, shared state or configuration, a migration touching existing data, performance, another repository.
+3. **gap** — implemented, but not all the way: edge case, empty state, permission, validation, error path, missing test for a stated criterion.
+4. **missing** — the spec or tasks ask for it and the PR does not deliver it. Cite the requirement (`R<n>`) or task (`T-<n>`).
+5. **extra** — implemented beyond the agreed scope: code the documents never asked for, speculative generality, an unused flag, an unrelated refactor riding along.
+6. **reuse** — a copy of something that already exists. Say where the existing one lives.
 
-## Comments
+- MUST: Report a finding only when it causes wrong behavior, fails a criterion, breaks something elsewhere, or adds or misses scope.
+- DON'T: Report nitpicks — style, naming, formatting, preference, "could be cleaner". If it changes no behavior and no scope, it is not a finding.
 
-`/plan`'s post-review mode reads these comments with none of this session in context. A comment that only makes sense to someone who watched the review is a comment that produces no fix.
+## Reviewers
 
-- MUST: Make every comment self-contained and actionable: what is wrong, why it is wrong, and what to do instead — concretely, in this file.
-- MUST: Open every comment with its axis in bold: `**[reuse]**`, `**[bug]**`, `**[gap]**`.
-- MUST: Show the replacement as a short code suggestion when the fix is a few lines. Use a ```suggestion block when it applies cleanly to the commented lines.
-- MUST: Attach the finding to the exact line that has to change, so the fix has an address.
-- SHOULD: Say what you checked when you clear a suspicion the diff invites — a reviewer's silence reads as "not looked at".
-- DON'T: Post style nits a linter or formatter already owns.
-- DON'T: Post the same finding on ten lines. Comment once on the clearest occurrence and list the others in that comment.
-- DON'T: Ask a question you can answer from the code. Read it and state the finding.
+You review nothing yourself. Four sub-agents do, each starting from nothing but the PR number, the document paths and its axes:
 
-## Post
+- **Criteria** — every acceptance criterion of the tasks this PR delivers, marked ✅ met, ❌ not met or ➖ not in this PR, with `file:line` evidence. Every ❌ becomes a `missing` or `gap` finding; this sub-agent also owns the `gap` and `missing` axes beyond the stated criteria.
+- **Bugs** — the `bug` axis.
+- **Side effects** — the `side-effect` axis.
+- **Scope** — the `extra` and `reuse` axes.
 
-Submit one review carrying every inline comment plus the summary body — not a stream of loose comments.
+Every sub-agent reads the same way:
 
-- MUST: Build the review payload and submit it with `gh api`:
+- Get the diff with `gh pr diff <n> --patch`, and read the current code around it. A diff hides its context: the caller that breaks, the sibling that already does this, the interface the new code was supposed to implement.
+- Open every file the diff touches at its current state, plus the code that calls it and the code it calls.
+- Look for the existing thing before calling something a duplicate.
 
-```sh
-gh api repos/{owner}/{repo}/pulls/<n>/reviews --method POST --input review.json
+Rules:
+
+- MUST: Dispatch the four in a single message, each with no context — only the PR number, the document paths and its axes. No conversation, no summary, no hint of the answer you expect.
+- MUST: Check nothing yourself. You consolidate and report; the sub-agents find.
+- MUST: Discard a finding a sub-agent can't back with a `file:line` — or, for `missing`, the requirement or task it cites. An unverified suspicion is noise, not a finding.
+- MUST: When two sub-agents disagree, give both claims to a fresh isolated sub-agent and take its verdict from the code.
+
+## Report
+
+Report in the session, in this order:
+
+1. **Verdict** — 🔴 *needs fixes* when there is a `bug`, a `side-effect` or a ❌ criterion; 🟢 *clean* otherwise.
+2. **Criteria** — the table: criterion, task, ✅ / ❌ / ➖, evidence.
+3. **Findings** — numbered, grouped by axis. Each one: `file:line`, what is wrong, why, and the suggested fix — a short code snippet when the fix is a few lines.
+4. **Checked and cleared** — what the diff invited suspicion about and turned out fine. Silence reads as "not looked at".
+
+```
+🔴 needs fixes
+
+| Criterion | Task | | Evidence |
+|---|---|---|---|
+| Export runs in the background | T-2 | ✅ | app/jobs/export_job.rb:12 |
+| User is notified when it's ready | T-3 | ❌ | no notification is sent |
+
+**bug**
+
+1. app/jobs/export_job.rb:31 — the file handle is never closed when the upload fails.
+   Why: every failed export leaks a descriptor until the worker restarts.
+   Fix: close it in an `ensure` around the upload.
 ```
 
-```json
-{
-  "commit_id": "<headRefOid>",
-  "event": "COMMENT",
-  "body": "<summary>",
-  "comments": [
-    { "path": "src/app/Handler.php", "line": 42, "side": "RIGHT", "body": "**[reuse]** ..." },
-    { "path": "src/app/Handler.php", "start_line": 60, "line": 66, "side": "RIGHT", "body": "**[gap]** ..." }
-  ]
-}
-```
-
-- MUST: Use `side: "RIGHT"` with the new file's line number for added or unchanged lines, `side: "LEFT"` with the old line number for deleted ones. The line must exist in the diff or the API rejects the whole review.
-- MUST: Pass the PR head SHA as `commit_id` so the comments anchor to the reviewed revision.
-- MUST: Write the payload with a heredoc or a file, never by hand-escaping JSON inside `-f`.
-- MUST: Drop an inline comment down to a bullet in the summary — pointing at `file:line` — when its line is not in the diff (a break in a file the PR never touched belongs there).
-- CAN: Use `gh pr review <n> --comment --body-file summary.md` when there is nothing inline to say.
-- MUST: Give the summary body: what the PR does, the verdict and why, the findings grouped by axis with their `file:line`, and anything you checked and cleared.
-- MUST: Report the review URL when you are done.
-
-## Verdict
-
-- MUST: Submit `REQUEST_CHANGES` when a grave problem exists — a bug, data loss or corruption, a broken contract, or an agreed requirement missing.
-- MUST: Submit `COMMENT` otherwise, however long the list of findings is.
-- DON'T: **Ever** submit `APPROVE`. Approving is the user's decision, not yours.
+- MUST: Number the findings and keep the numbers stable — `/plan` and I refer to them by number.
+- MUST: Report a repeated finding once, on its clearest occurrence, and list the other places in it.
+- MUST: End, when there is any finding, by suggesting `/plan <PR>` to turn the findings into a fix plan.
 
 ## Rules
 
-- DON'T: Change code, commit, push, or open a PR. This skill reviews and comments — nothing else.
-- DON'T: Merge, close, label or re-title the PR.
-- DON'T: Invent a finding to look thorough. A clean PR gets a `COMMENT` review that says it is clean and what you checked.
-- DON'T: Review the diff alone. Every finding must be checked against the current code before it is posted.
+- DON'T: Comment on the PR, submit a review, or reply to anything on it. The report lives in the session only.
+- DON'T: Change code, commit, push, merge, close, label or re-title the PR.
+- DON'T: Invent a finding to look thorough. A clean PR gets 🟢 and what was checked.
+- DON'T: Ask a question the code can answer. A sub-agent reads it and states the finding.

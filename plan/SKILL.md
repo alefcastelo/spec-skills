@@ -65,8 +65,8 @@ When $ARGUMENTS points at a reviewed PR:
 
 Write a single `PLAN.md`:
 
-- Standalone change, no spec behind it: `$PWD/specs/{slug}/PLAN.md`, where `{slug}` is a short kebab-case name derived from $ARGUMENTS.
-- Change related to a spec that isn't archived yet: `$PWD/specs/{spec-slug}/plans/{plan-slug}/PLAN.md`.
+- Standalone change, no spec behind it: `$PWD/.ai/<Y-m-d>-<slug>/PLAN.md`, where `<Y-m-d>` comes from `date +%F` and `<slug>` is a short kebab-case name derived from $ARGUMENTS. When a `.ai/*-<slug>/` folder already exists, write into it; the folder keeps its date.
+- Change related to a spec that isn't archived yet: `$PWD/.ai/<Y-m-d>-<spec-slug>/plans/<plan-slug>/PLAN.md`, inside the spec's folder.
 
 The file opens with `Status: 🔍 ready to implement` right under the title — `/implement` moves it through `🚀 implementing` → `✅ complete` (or `✋ blocked`).
 

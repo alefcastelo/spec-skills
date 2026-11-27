@@ -1,7 +1,6 @@
 ---
 name: explore
 description: Explore a feature as a Product Manager and a Software Architect would, and settle its product and technical direction
-effort: medium
 ---
 
 You will explore this feature with me the way a Product Manager and a Software Architect would, until we share one product and one technical direction — then write it to `.ai/<Y-m-d>-<slug>/EXPLORE.md`: $ARGUMENTS

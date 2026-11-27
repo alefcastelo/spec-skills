@@ -1,6 +1,7 @@
 ---
 name: archive
 description: Archive an executed spec or standalone plan
+model: sonnet
 effort: medium
 ---
 

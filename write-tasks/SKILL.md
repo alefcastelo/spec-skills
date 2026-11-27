@@ -1,7 +1,8 @@
 ---
 name: write-tasks
 description: Break an agreed spec into shippable slices and the tasks that build them
-effort: max
+model: sonnet
+effort: medium
 ---
 
 You will read the agreed spec and break it into slices, each slice into tasks, writing them to `TASK.md`: $ARGUMENTS

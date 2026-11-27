@@ -1,7 +1,7 @@
 ---
 name: implement
 description: Implement a spec's or plan's tasks end-to-end
-effort: max
+effort: medium
 ---
 
 Implement the tasks for this spec or plan, or pick the next track when none is given: $ARGUMENTS

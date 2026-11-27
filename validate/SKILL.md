@@ -1,7 +1,7 @@
 ---
 name: validate
 description: Validate a spec (SPEC.md + TASK.md) or a PLAN.md with five isolated sub-agents before implementation
-effort: max
+effort: medium
 ---
 
 You will validate an agreed spec — its `SPEC.md` and `TASK.md` together — or a `PLAN.md`: dispatch isolated sub-agents to hunt for what it gets wrong or leaves out, consolidate their findings, settle what the decision rule from `/specify` lets you settle, put every other finding to me, and fold the corrections back into the documents: $ARGUMENTS
@@ -63,6 +63,22 @@ Work the findings the way `/specify` works the design tree.
 The **frontier** is every finding I can decide now — the ones whose answer doesn't depend on another finding still open.
 
 - MUST: Put the whole frontier to me in one round, then stop and wait for my answers.
+- MUST: Ask in the round format of `/explore`, `/specify` and `/plan` — a numbered text round, never AskUserQuestion. Every question carries its impact (🚨 `[high impact]`, ⚠️ `[moderate impact]`, `[low impact]` with no emoji), the finding number it settles, your 💡 recommendation and its ⚖️ tradeoff. Mark every settled finding with 🤝 in the recap, and close the round with the numbered **🤖 Decided by me** block.
+```
+**Round 1**
+
+1. 🚨 [high impact] Finding 1 — R3 opens the report to any authenticated
+   user, but the policy scopes it to the owning team. Which one holds?
+   💡 Recommendation: the policy — narrow R3 to the owning team.
+   ⚖️ Tradeoff: matches today's permissions, but R5's "share with a
+     client" flow then needs its own token.
+
+**🤖 Decided by me**
+
+1. Finding 2 — empty state reuses the invoices list copy
+   (app/views/invoices/_empty.html.erb:1): one existing answer, reversible.
+```
+
 - MUST: Recompute the frontier after every round. My answers settle findings and can open new ones — a decision that changes the design goes back to a fresh isolated sub-agent before the next round.
 - MUST: Push a finding whose resolution depends on another finding still open to a later round.
 - MUST: Treat a running sub-agent as an unsettled prerequisite — it blocks only the findings downstream of it, so put the rest of the frontier to me now.

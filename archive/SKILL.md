@@ -1,7 +1,8 @@
 ---
 name: archive
 description: Archive an executed spec or standalone plan
-effort: max
+model: sonnet
+effort: medium
 ---
 
 Archive the spec directory (`SPEC.md` + `TASK.md`), or a standalone plan directory (`PLAN.md`), once its work is done: $ARGUMENTS

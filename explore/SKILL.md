@@ -1,7 +1,7 @@
 ---
 name: explore
 description: Explore a feature as a Product Manager and a Software Architect would, and settle its product and technical direction
-effort: max
+effort: medium
 ---
 
 You will explore this feature with me the way a Product Manager and a Software Architect would, until we share one product and one technical direction — then write it to `.ai/<Y-m-d>-<slug>/EXPLORE.md`: $ARGUMENTS
@@ -22,13 +22,22 @@ Direction, not design. A choice is direction when reversing it later rewrites th
 - MUST: Ask only what changes the direction. Name a technology only when the choice itself sets it.
 - DON'T: Go past direction into contracts, data shapes, configuration or tasks.
 
+## Scope first
+
+Scope is the first alignment, and the only one until it is settled. Without a clear, final scope the investigation grows and every other question reads as premature.
+
+- MUST: Make Round 1 scope only — how far I want to go. Start with the depth: the outer boundary (a whole capability, one flow, a first cut), then the details inside it (what's in, what's out, the MVP).
+- MUST: Ask nothing outside scope — no product detail, no technical question — until every scope question is 🤝 settled. Recompute the scope frontier round by round until it is.
+- MUST: Run only the fact-finding that scope questions need while scope is open; investigate the rest once the boundary is set.
+- MUST: Reopen scope, explicitly, when a later answer pushes past the boundary — never widen it silently.
+
 ## Topics
 
 Product first — it justifies the technical side. Cover a topic only when it matters for this feature:
 
 - 🧭 **Problem & value** — the pain and the gain.
 - 🧭 **Users & journey** — who uses it, the steps, the screens, what they see and enter, at a high level.
-- 🧭 **Scope** — what's in, what's out, the MVP.
+- 🧭 **Scope** — settled first, per **Scope first**; later topics stay inside it.
 - 🧭 **Success & validation** — the metric, and how we test or roll it out.
 - 🏗️ **Viability & effort** — fit with the constitution, impact on what exists, scale constraints, size S/M/L/XL.
 - 🏗️ **High-level decisions** — the choices that set the technical direction.

@@ -1,7 +1,7 @@
 ---
 name: review
 description: Review a PR against its spec and tasks with isolated sub-agents, and report the findings in the session
-effort: max
+effort: medium
 ---
 
 Review this PR against the spec and tasks it delivers, and report what you find here, in the session: $ARGUMENTS
@@ -41,12 +41,13 @@ You review nothing yourself. Four sub-agents do, each starting from nothing but 
 
 Every sub-agent reads the same way:
 
-- Get the diff with `gh pr diff <n> --patch`, and read the current code around it. A diff hides its context: the caller that breaks, the sibling that already does this, the interface the new code was supposed to implement.
+- Get the whole PR's diff against its base with `gh pr diff <n> --patch` — every commit the PR carries, never only the ones pushed since a previous review — and read the current code around it. A diff hides its context: the caller that breaks, the sibling that already does this, the interface the new code was supposed to implement.
 - Open every file the diff touches at its current state, plus the code that calls it and the code it calls.
 - Look for the existing thing before calling something a duplicate.
 
 Rules:
 
+- MUST: Review the whole PR on every run — a re-review after fixes covers the full diff again, never the delta since the last round. A fix can break code an earlier round cleared.
 - MUST: Dispatch the four in a single message, each with no context — only the PR number, the document paths and its axes. No conversation, no summary, no hint of the answer you expect.
 - MUST: Check nothing yourself. You consolidate and report; the sub-agents find.
 - MUST: Discard a finding a sub-agent can't back with a `file:line` — or, for `missing`, the requirement or task it cites. An unverified suspicion is noise, not a finding.

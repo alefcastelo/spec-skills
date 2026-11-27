@@ -1,7 +1,7 @@
 ---
 name: constitution
 description: Build or rebuild the project's constitution — lasting decisions and tech stack — in .ai/CONSTITUTION.md
-effort: max
+effort: medium
 ---
 
 Map this project's lasting decisions and the technology that implements them into `.ai/CONSTITUTION.md`. Run it whenever the project needs it — every run revisits every definition: $ARGUMENTS
